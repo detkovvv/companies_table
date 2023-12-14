@@ -1,9 +1,16 @@
 import React from 'react';
 
+import { CompaniesList } from '../../components/CompaniesList/CompaniesList';
+import { EmployeesList } from '../../components/EmployeesList/EmployeesList';
+
 export const MainPage = () => {
 
     return (
-        <table>1</table>
+        <div>
+            <CompaniesList />
+            <EmployeesList />
+        </div>
+        
     )
 
 }
