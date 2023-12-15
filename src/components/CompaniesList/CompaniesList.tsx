@@ -9,7 +9,7 @@ export const customId = () => {
 }
 
 export const CompaniesList: FC = () => {
-    const companies = useAppSelector((state => state.companies.companies));
+    const { companies, isLoading } = useAppSelector((state => state.companies));
     const dispatch = useAppDispatch();
 
     useEffect(()=>{
@@ -19,10 +19,10 @@ export const CompaniesList: FC = () => {
     const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
 
     const handleCheckboxChange = (company: string) => {
-        if (selectedCompanies.includes(company.name)) {
-            setSelectedCompanies(selectedCompanies.filter(name => name !== company.name));
+        if (selectedCompanies) {
+            setSelectedCompanies(selectedCompanies.filter(name => name !== company));
         } else {
-            setSelectedCompanies([...selectedCompanies, company.name]);
+            setSelectedCompanies([...selectedCompanies, company]);
         }
     };
 
@@ -52,10 +52,10 @@ export const CompaniesList: FC = () => {
                 </tr>
                 </thead>
                 <tbody>
-                  {companies.map(company => (
+                  {isLoading? <div>...isLoading</div> : companies.map(company => (
                     <tr
                         key={customId()}
-                        onClick={() => handleCheckboxChange(company.name)}
+                        onClick={() => setSelectedCompanies(company)}
                     >
                         <td>
                             <input

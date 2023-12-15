@@ -4,27 +4,27 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { customId } from '../CompaniesList/CompaniesList';
 
 export const EmployeesList: FC = ({ selectedCompany }) => {
-    const companies = useAppSelector((state => state.companies));
-    const employees = selectedCompany.employees;
-    const dispatch = useAppDispatch();
-
-    const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
-
-    const handleCheckboxChange = (employeeId: string) => {
-        if (selectedEmployees.includes(employeeId)) {
-            setSelectedEmployees(selectedEmployees.filter(id => id !== employeeId));
-        } else {
-            setSelectedEmployees([...selectedEmployees, employeeId]);
-        }
-    };
-
-    const handleSelectAll = () => {
-        setSelectedEmployees([]);
-    };
-
-    const handleEmployeeFieldChange = (employeeId: string, field: string, value: string) => {
-        dispatch(updateEmployee({ id: employeeId, field, value }));
-    };
+    // const companies = useAppSelector((state => state.companies.companies));
+    // const employees = selectedCompany.employees;
+    // const dispatch = useAppDispatch();
+    //
+    // const [selectedEmployees, setSelectedEmployees] = useState<string[]>([]);
+    //
+    // const handleCheckboxChange = (employeeId: string) => {
+    //     if (selectedEmployees.includes(employeeId)) {
+    //         setSelectedEmployees(selectedEmployees.filter(id => id !== employeeId));
+    //     } else {
+    //         setSelectedEmployees([...selectedEmployees, employeeId]);
+    //     }
+    // };
+    //
+    // const handleSelectAll = () => {
+    //     setSelectedEmployees([]);
+    // };
+    //
+    // const handleEmployeeFieldChange = (employeeId: string, field: string, value: string) => {
+    //     dispatch(updateEmployee({ id: employeeId, field, value }));
+    // };
 
     return (
         <div>
