@@ -1,76 +1,52 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect } from 'react';
 
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
 import { fetchCompanies } from '../../store/reducers/ActionCreators';
-import {  updateCompany } from '../../store/reducers/CompaniesSlice';
+import { Table } from '../Table/Table';
 
-export const customId = () => {
-    return Math.floor(Math.random() * 1000000);
-}
+
+
 
 export const CompaniesList: FC = () => {
     const { companies, isLoading } = useAppSelector((state => state.companies));
     const dispatch = useAppDispatch();
 
-    useEffect(()=>{
+    useEffect(() => {
         dispatch(fetchCompanies());
-   },[])
+    }, []);
 
-    const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
+    const head = [
+        {
+            title: 'Название компании',
+            id: crypto.randomUUID(),
+            key: 'name',
+        },
+        {
+            title: 'Кол-во сотрудников',
+            id: crypto.randomUUID(),
+            key: 'employees',
+        },
+        {
+            title: 'Адрес',
+            id: crypto.randomUUID(),
+            key: 'address',
+        },
+    ] as const;
 
-    const handleCheckboxChange = (company: string) => {
-        if (selectedCompanies) {
-            setSelectedCompanies(selectedCompanies.filter(name => name !== company));
-        } else {
-            setSelectedCompanies([...selectedCompanies, company]);
-        }
-    };
+    const order = ['name', 'employees', 'address'];
 
-    const handleSelectAll = () => {
-        if (selectedCompanies.length === companies.length) {
-            setSelectedCompanies([]);
-        } else {
-            setSelectedCompanies(companies.map(company => company.name));
-        }
-    };
+    const body = companies.map(({ name, employees, address }) => ({
+        name,
+        employees: employees.length,
+        address,
+        id: crypto.randomUUID(),
+    }));
 
-    const handleCompanyFieldChange = (companyName: string, field: string, value: string) => {
-        dispatch(updateCompany({ name: companyName, field, value }));
-    };
+    // const handleCompanyFieldChange = (companyName: string, field: string) => (event: any) => {
+    //     dispatch(updateCompany({ name: companyName, field, event.currentTarget.innerText }));
+    // };
 
     return (
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>
-                        <input checked={selectedCompanies.length === companies.length} onChange={handleSelectAll} type="checkbox" />
-                    </th>
-                    <th>Название компании</th>
-                    <th>Кол-во сотрудников</th>
-                    <th>Адрес</th>
-                </tr>
-                </thead>
-                <tbody>
-                  {isLoading? <div>...isLoading</div> : companies.map(company => (
-                    <tr
-                        key={customId()}
-                        onClick={() => setSelectedCompanies(company)}
-                    >
-                        <td>
-                            <input
-                                checked={selectedCompanies.includes(company.name)}
-                                onChange={() => handleCheckboxChange(company.name)}
-                                type="checkbox"
-                            />
-                        </td>
-                        <td onBlur={(e) => handleCompanyFieldChange(company.name, 'name', e.currentTarget.innerText)}>{company.name}</td>
-                        <td>{company.employees.length}</td>
-                        <td onBlur={(e) => handleCompanyFieldChange(company.name, 'address', e.currentTarget.innerText)}>{company.address}</td>
-                    </tr>
-                  ))}
-                </tbody>
-            </table>
-        </div>
+        isLoading? <div>...Loading</div> : <Table body={body} head={head} order={order} withAction />
     );
 };
