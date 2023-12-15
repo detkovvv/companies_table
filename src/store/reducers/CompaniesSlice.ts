@@ -1,32 +1,61 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { type Employee } from './EmployeesSlice';
+export interface Employee {
+    surname: string;
+    name: string;
+    position: string;
+}
 
 export interface Company {
     name: string;
-    staff: number;
     address: string;
     employees: Employee[];
 }
 
+export interface CompaniesState {
+    companies: Company[];
+    isLoading: boolean;
+    error: string;
+
+}
+
+export const initialState: CompaniesState = {
+    companies: [],
+    isLoading: false,
+    error: '',
+
+};
+
 export const companiesSlice = createSlice({
     name: 'companies',
-    initialState: [] as Company[],
+    initialState,
     reducers: {
-        addCompany: (state, action) => {
-            state.push(action.payload);
+        companiesFetching: (state) => {
+            state.isLoading = true;
         },
-        removeCompany: (state, action) => {
-            return state.filter(company => !action.payload.includes(company));
+        companiesFetchingSuccess: (state, action: PayloadAction<Company[]>) => {
+            state.isLoading = false;
+            state.error = '';
+            state.companies = action.payload;
         },
-        updateCompany: (state, action) => {
-            const { name, field, value } = action.payload;
-            const company = state.find(c => c.name === name);
-            if (company) {
-                company[field] = value;
-            }
+        companiesFetchingError: (state, action: PayloadAction<string>) => {
+            state.isLoading = false;
+            state.error = action.payload;
         },
+        // addCompany: (state, action: PayloadAction<Company>) => {
+        //     state.push(action.payload);
+        // },
+        // removeCompany: (state, action) => {
+        //     return state.filter(company => !action.payload.includes(company));
+        // },
+        // updateCompany: (state, action) => {
+        //     const { name, address, value } = action.payload;
+        //     const company = state.find(c => c.name === name);
+        //     if (company) {
+        //         company[address] = value;
+        //     }
+        // },
     },
 });
 
-export const {addCompany, removeCompany, updateCompany} = companiesSlice;
+export const { addCompany, removeCompany, updateCompany } = companiesSlice;

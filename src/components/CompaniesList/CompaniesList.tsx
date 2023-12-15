@@ -1,21 +1,29 @@
-import { type FC, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { type FC, useEffect, useState } from 'react';
 
-import { type Company, updateCompany } from '../../store/reducers/CompaniesSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
+import { fetchCompanies } from '../../store/reducers/ActionCreators';
+import {  updateCompany } from '../../store/reducers/CompaniesSlice';
+
+export const customId = () => {
+    return Math.floor(Math.random() * 1000000);
+}
 
 export const CompaniesList: FC = () => {
-    const companies = useSelector((state: { companies: Company[] }) => state.companies);
-    const dispatch = useDispatch();
+    const companies = useAppSelector((state => state.companies.companies));
+    const dispatch = useAppDispatch();
+
+    useEffect(()=>{
+        dispatch(fetchCompanies());
+   },[])
 
     const [selectedCompanies, setSelectedCompanies] = useState<string[]>([]);
 
-    const handleCheckboxChange = (companyName: string) => {
-        if (selectedCompanies.includes(companyName)) {
-            setSelectedCompanies(selectedCompanies.filter(name => name !== companyName));
+    const handleCheckboxChange = (company: string) => {
+        if (selectedCompanies.includes(company.name)) {
+            setSelectedCompanies(selectedCompanies.filter(name => name !== company.name));
         } else {
-            setSelectedCompanies([...selectedCompanies, companyName]);
+            setSelectedCompanies([...selectedCompanies, company.name]);
         }
-        dispatch(setSelectedCompany(companyName));
     };
 
     const handleSelectAll = () => {
@@ -24,7 +32,6 @@ export const CompaniesList: FC = () => {
         } else {
             setSelectedCompanies(companies.map(company => company.name));
         }
-        dispatch(setSelectedCompany(''));
     };
 
     const handleCompanyFieldChange = (companyName: string, field: string, value: string) => {
@@ -45,11 +52,10 @@ export const CompaniesList: FC = () => {
                 </tr>
                 </thead>
                 <tbody>
-                {companies.map(company => (
+                  {companies.map(company => (
                     <tr
-                        key={company.name}
+                        key={customId()}
                         onClick={() => handleCheckboxChange(company.name)}
-                        style={{ backgroundColor: company.selected ? 'lightgray' : 'white' }}
                     >
                         <td>
                             <input
@@ -58,15 +64,13 @@ export const CompaniesList: FC = () => {
                                 type="checkbox"
                             />
                         </td>
-                        <td contentEditable onBlur={(e) => handleCompanyFieldChange(company.name, 'name', e.currentTarget.innerText)}>{company.name}</td>
+                        <td onBlur={(e) => handleCompanyFieldChange(company.name, 'name', e.currentTarget.innerText)}>{company.name}</td>
                         <td>{company.employees.length}</td>
-                        <td contentEditable onBlur={(e) => handleCompanyFieldChange(company.name, 'address', e.currentTarget.innerText)}>{company.address}</td>
+                        <td onBlur={(e) => handleCompanyFieldChange(company.name, 'address', e.currentTarget.innerText)}>{company.address}</td>
                     </tr>
-                ))}
+                  ))}
                 </tbody>
             </table>
-            {/* Кнопки добавления/удаления компаний и обновления счетчика сотрудников */}
-            {/* ... */}
         </div>
     );
 };

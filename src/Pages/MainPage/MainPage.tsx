@@ -7,8 +7,8 @@ export const MainPage = () => {
 
     return (
         <div>
-            <CompaniesList />
-            <EmployeesList />
+             <CompaniesList />
+             <EmployeesList />
         </div>
         
     )
