@@ -1,5 +1,5 @@
 import { companiesSlice, Company } from './CompaniesSlice';
-import { companiesList } from '../companiesList';
+import { companiesList } from '../../utils/companiesList';
 import { type AppDispatch } from '../store';
 
 

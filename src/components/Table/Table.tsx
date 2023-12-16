@@ -1,65 +1,31 @@
-import { type FC, useEffect, useRef, useState } from 'react';
+import { type FC } from 'react';
 
-type HeadType = {
-    title: string;
-    id: string;
-    key: string;
-};
-
-type BodyType = {
-    name: string;
-    staff: string;
-    address: string;
-    id: string;
-};
+import { getHeaderFromObject } from '../../utils/tableHelpers';
+import { useTable } from '../../utils/useTable';
 
 type TableProps = {
-    head: HeadType[];
-    body: BodyType[];
+    head: object;
+    body: Array<object>;
     order: string[];
     withAction?: boolean;
+    onChoose?: (value: string[]) => void;
 };
-export const Table: FC<TableProps> = ({ head, body, order, withAction = false }) => {
-    const sortedHead = order.map((i) => {
-        return head.find((item) => item.key === i) as (typeof head)[0];
-    });
 
-    // массив выбранных айдишников
-    const [checkList, setCheckList] = useState<string[]>([]);
-    const mainCheckBoxRef = useRef<HTMLInputElement>(null);
+export const Table: FC<TableProps> = ({
+                                          head,
+                                          body,
+                                          order,
+                                          withAction = false,
+                                          onChoose,
+                                      }) => {
+    const sortedHead = getHeaderFromObject({ order, head });
 
-    useEffect(() => {
-        if (!mainCheckBoxRef.current) return;
-        if (checkList.length === body.length) {
-            mainCheckBoxRef.current.checked = true;
-        }
-        if (checkList.length === 0) {
-            mainCheckBoxRef.current.checked = false;
-        }
-        if (checkList.length > 0 && checkList.length < body.length) {
-            mainCheckBoxRef.current.indeterminate = true;
-        }
-    }, [checkList.length, body.length]);
-
-    const handleChangeCheckboxes = (id: string) => () => {
-        if (checkList.includes(id)) {
-            setCheckList(checkList.filter((i) => i !== id));
-        } else {
-            setCheckList([...checkList, id]);
-        }
-    };
-
-    const handleChangeMainCheckbox = () => {
-        if (checkList.length === body.length) {
-            setCheckList([]);
-        }
-        if (checkList.length === 0) {
-            setCheckList(body.map((i) => i.id));
-        }
-        if (checkList.length > 0 && checkList.length < body.length) {
-            setCheckList([]);
-        }
-    };
+    const {
+        mainCheckboxRef,
+        handleChangeMainCheckbox,
+        checkList,
+        handleChangeCheckboxes,
+    } = useTable(body, onChoose);
 
     return (
         <div>
@@ -69,13 +35,13 @@ export const Table: FC<TableProps> = ({ head, body, order, withAction = false })
                     <th>
                         <input
                             onChange={handleChangeMainCheckbox}
-                            ref={mainCheckBoxRef}
-                            type='checkbox'
+                            ref={mainCheckboxRef}
+                            type="checkbox"
                         />
                     </th>
                 )}
                 {sortedHead.map((i) => (
-                    <th key={i.id}>{i.title}</th>
+                    <th key={i.key}>{i.title}</th>
                 ))}
                 </thead>
                 <tbody>
@@ -86,7 +52,7 @@ export const Table: FC<TableProps> = ({ head, body, order, withAction = false })
                                 <input
                                     checked={checkList.includes(item.id)}
                                     onChange={handleChangeCheckboxes(item.id)}
-                                    type='checkbox'
+                                    type="checkbox"
                                 />
                             </td>
                         )}
