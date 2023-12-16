@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import { useMainCheckbox } from './useMainCheckbox';
+import { useMainCheckbox } from './useMainCheckBox';
+
 
 // хук для управления логикой чекбоксов
 export const useTable = (

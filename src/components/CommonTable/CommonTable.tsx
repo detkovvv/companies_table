@@ -25,31 +25,40 @@ export const CommonTable = () => {
             return {
                 ...item,
                 employees: item.employees.filter(
-                    (emp) => !employeeList.includes(emp.id)
+                    (emp) => !employeeList.includes(emp.id),
                 ),
             };
         });
         setData(result);
         setEmployeeList([]);
     };
+
+    // const onChangeCompany = () =>{};
+    // const onChangeEmployee = () =>{};
+    // const onAddEmployee = () =>{};
+    // const onAddEmployee = () =>{};
+
     return (
-        <>
+        <div style={{  display: 'flex', justifyContent: 'flex-start', alignItems: 'start', }}>
             <CompanyTable data={data} onChoose={onChooseCompany} />
             <EmployeesTable
                 currentCompany={companyList}
                 data={data}
                 onChoose={onChooseEmployee}
             />
-            {!!companyList.length && (
-                <button onClick={handleRemoveCompany}>
-                    Удалить: ({companyList.length}) компанию(и)
-                </button>
-            )}
-            {!!employeeList.length && (
-                <button onClick={handleRemoveEmployee}>
-                    Удалить: ({employeeList.length}) сотрудника(ов)
-                </button>
-            )}
-        </>
+            <div>
+                {!!companyList.length && (
+                    <button onClick={handleRemoveCompany}>
+                        Удалить: ({companyList.length}) компанию(и)
+                    </button>
+                )}
+                {!!employeeList.length && (
+                    <button onClick={handleRemoveEmployee}>
+                        Удалить: ({employeeList.length}) сотрудника(ов)
+                    </button>
+                )}
+            </div>
+
+        </div>
     );
 };

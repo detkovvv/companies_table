@@ -1,12 +1,12 @@
+
 import { Table } from '../Table/Table';
 
-// этот компонент умный (называется smart-component) он управляет тем, какие данные идут в тупой компонент
 export const CompanyTable = ({ onChoose, data, onChange }) => {
     const order = ['name', 'staff', 'address'];
 
     const head = {
-        staff: 'Кол-во сотрудников',
         name: 'Название компании',
+        staff: 'Кол-во сотрудников',
         address: 'Адрес',
     };
 

@@ -10,13 +10,8 @@ type EmployeesTableProps = {
     onChange: (value: string[]) => void;
 };
 
-// этот компонент умный (называется smart-component) он управляет тем, какие данные идут в тупой компонент
-export const EmployeesTable: FC<EmployeesTableProps> = ({
-                                                            currentCompany,
-                                                            data,
-                                                            onChange,
-                                                            onChoose,
-                                                        }) => {
+export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, onChange, onChoose, }) => {
+
     const head = {
         surname: 'Фамилия',
         name: 'Имя',
