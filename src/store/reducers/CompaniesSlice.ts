@@ -51,4 +51,4 @@ export const companiesSlice = createSlice({
     },
 });
 
-export const { addCompany, removeCompany, updateCompany } = companiesSlice.actions;
+export const { addCompany, removeCompany, updateCompany, setCheckedCompany } = companiesSlice.actions;

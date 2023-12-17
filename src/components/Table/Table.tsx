@@ -10,6 +10,8 @@ type TableProps = {
     order: string[];
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
+    onClick?: (id: string, key: string) => () => void;
+    name: string;
 };
 
 export const Table: FC<TableProps> = ({
@@ -18,6 +20,8 @@ export const Table: FC<TableProps> = ({
                                           order,
                                           withAction = false,
                                           onChoose,
+                                          onClick,
+                                          name,
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });
 
@@ -26,7 +30,7 @@ export const Table: FC<TableProps> = ({
         handleChangeMainCheckbox,
         checkList,
         handleChangeCheckboxes,
-    } = useTable(body, onChoose);
+    } = useTable(body, onChoose, name);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
     const containerHeight = 700;
@@ -36,12 +40,12 @@ export const Table: FC<TableProps> = ({
         itemHeight: itemHeight,
         itemsCount: body.length,
         listHeight: containerHeight,
-        scrollElementRef: scrollElementRef
+        scrollElementRef: scrollElementRef,
     });
 
     return (
         <div ref={scrollElementRef}
-             style={{ height: containerHeight, overflowX: 'hidden',overflowY:'auto', border: '1px solid lightgrey' }}>
+             style={{ height: containerHeight, overflowX: 'hidden', overflowY: 'auto', border: '1px solid lightgrey' }}>
             <div style={{ height: totalHeight }}>
                 <table>
                     <thead>
@@ -57,9 +61,6 @@ export const Table: FC<TableProps> = ({
                     {sortedHead.map((i) => (
                         <th key={i.key}>{i.title}</th>
                     ))}
-                    <th>
-                        кнопка
-                    </th>
                     </thead>
                     <tbody style={{ position: 'relative' }}>
                     {virtualItems.map((virtualItem, ind) => {
@@ -81,11 +82,9 @@ export const Table: FC<TableProps> = ({
                                     </td>
                                 )}
                                 {order.map((key) => (
-                                    <td key={key}><input value={body[ind][key]} /></td>
+                                    <td key={key} onClick={onClick?.(item.id, key)}><input value={body[ind][key]} />
+                                    </td>
                                 ))}
-                                <td>
-                                    <button>изменить</button>
-                                </td>
                             </tr>
                         );
                     })}

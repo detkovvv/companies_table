@@ -1,21 +1,22 @@
 import { useState, useEffect } from 'react';
 
+import { useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
 
 
 // хук для управления логикой чекбоксов
 export const useTable = (
     body: Array<unknown>,
-    handleChange?: (value: string[]) => void
+    handleChange?: (value: string[]) => void,
+    tableName: string,
 ) => {
-    // тут будет храниться массив выбранных айдишников
-    const [checkList, setCheckList] = useState<string[]>([]);
+    const checkList = useAppSelector(state => state[tableName].checked);
 
     const { mainCheckboxRef, setChecked, setIndeterminate, setUnchecked } =
         useMainCheckbox();
 
     const handleChangeCheckList = (value: string[]) => {
-        setCheckList(value);
+
         handleChange?.(value);
     };
 

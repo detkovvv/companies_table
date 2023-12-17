@@ -11,7 +11,7 @@ type EmployeesTableProps = {
     onChange: (value: string[]) => void;
 };
 
-export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, onChange, onChoose, }) => {
+export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, onChange, onChoose }) => {
 
     const head = {
         surname: 'Фамилия',
@@ -30,7 +30,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
     if (currentCompany.length !== 1) return null;
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             <EmployeeForm />
             <Table
                 body={employeesData}
@@ -38,9 +38,10 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
                 onChange={onChange}
                 onChoose={onChoose}
                 order={order}
-                withAction
+                withAction,
+            name={'employees'}
             />
         </div>
-        
+
     );
 };

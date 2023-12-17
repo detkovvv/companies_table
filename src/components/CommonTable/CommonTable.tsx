@@ -22,6 +22,10 @@ export const CommonTable = () => {
     const onChooseCompany = (value: string[]) => setCompanyList(value);
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
 
+    const handleClick = ()=>{
+
+    }
+
     const handleRemoveCompany = () => {
         dispatch(removeCompany(companyList));
         setCompanyList([]);
@@ -46,7 +50,7 @@ export const CommonTable = () => {
                         Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
-                <CompanyTable data={data} onChoose={onChooseCompany} />
+                <CompanyTable data={data} onChoose={onChooseCompany} onClick={handleClick} />
             </div>
             <div>
                 {!!employeeList.length && (

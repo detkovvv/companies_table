@@ -23,8 +23,10 @@ export const CompanyTable = ({ onChoose, data, onChange }) => {
             <Table
                 body={body}
                 head={head}
+                name={'companies'}
                 onChange={onChange}
                 onChoose={onChoose}
+                onClick={(id, key)=>()=>console.log(id, key)}
                 order={order}
                 withAction
             />
