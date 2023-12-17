@@ -4,9 +4,16 @@ export type CompanyType = {
     employees: Array<EmployeeType>;
 };
 
-export type EmployeeType = Record<'surname' | 'name' | 'position' | 'id', string>;
+export type EmployeeType = {
+    surname: string;
+    name: string;
+    position: string;
+    id: string;
+    isSelected: boolean;
+};
 
 export type CompanyFullType = CompanyType & {
     stuff: number;
     id: string;
+    isSelected: boolean;
 };

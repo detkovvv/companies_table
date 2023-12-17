@@ -30,12 +30,15 @@ export const companiesSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
-        // addCompany: (state, action: PayloadAction<Company>) => {
-        //     state.push(action.payload);
-        // },
-        // removeCompany: (state, action) => {
-        //     return state.filter(company => !action.payload.includes(company));
-        // },
+        // checkedCompany: (state, action)=>{
+        //     state.companies.
+        // }
+        addCompany: (state, action: PayloadAction<CompanyFullType>) => {
+            state.companies.push(action.payload);
+        },
+        removeCompany: (state, action:PayloadAction<string[]>) => {
+            state.companies = state.companies.filter(company => !action.payload.includes(company.id) );
+        },
         // updateCompany: (state, action) => {
         //     const { name, address, value } = action.payload;
         //     const company = state.find(c => c.name === name);
@@ -46,4 +49,4 @@ export const companiesSlice = createSlice({
     },
 });
 
-export const { addCompany, removeCompany, updateCompany } = companiesSlice;
+export const { addCompany, removeCompany, updateCompany } = companiesSlice.actions;

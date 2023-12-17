@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchCompanies } from '../../store/reducers/ActionCreators';
+import { removeCompany } from '../../store/reducers/CompaniesSlice';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { CompanyTable } from '../CompanyTable/CompanyTable';
 import { EmployeesTable } from '../EmployeesTable/EmployeesTable';
@@ -22,20 +23,13 @@ export const CommonTable = () => {
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
 
     const handleRemoveCompany = () => {
-        const result = data.filter(({ id }) => !companyList.includes(id));
+        dispatch(removeCompany(companyList))
         setCompanyList([]);
     };
+    console.log(companyList);
 
     const handleRemoveEmployee = () => {
-        const result = data.map((item) => {
-            if (item.id !== companyList[0]) return item;
-            return {
-                ...item,
-                employees: item.employees.filter(
-                    (emp) => !employeeList.includes(emp.id),
-                ),
-            };
-        });
+        dispatch(removeEmployee(employeeList))
         setEmployeeList([]);
     };
 

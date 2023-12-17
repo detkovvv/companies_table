@@ -12,13 +12,14 @@ export const fetchCompanies = () => async (dispatch: AppDispatch) => {
                 resolve(companiesList);
             }, 2000);
         })
-        const data = arrayInsertEmployees(
-            arrayInsertId(promise)
+        const data = await promise;
+            const mockData = arrayInsertEmployees(
+            arrayInsertId(data)
         ).map((item) => ({
             ...item,
             employees: arrayInsertId(item.employees),
         }));
-        dispatch(companiesSlice.actions.companiesFetchingSuccess(data));
+        dispatch(companiesSlice.actions.companiesFetchingSuccess(mockData));
     } catch (error){
         dispatch(companiesSlice.actions.companiesFetchingError(error.message));
     }
