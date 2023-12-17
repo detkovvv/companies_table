@@ -30,7 +30,7 @@ export const Table: FC<TableProps> = ({
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
     const containerHeight = 600;
-    const itemHeight = 40;
+    const itemHeight = 50;
 
     const { virtualItems, totalHeight } = useFixedSizeList({
         itemHeight: itemHeight,
@@ -43,7 +43,7 @@ export const Table: FC<TableProps> = ({
         <div ref={scrollElementRef}
              style={{ height: containerHeight, overflow: 'auto', border: '1px solid lightgrey' }}>
             <div style={{ height: totalHeight }}>
-                <table style={{ width: '100%' }}>
+                <table>
                     <thead>
                     {withAction && (
                         <th>
@@ -57,8 +57,10 @@ export const Table: FC<TableProps> = ({
                     {sortedHead.map((i) => (
                         <th key={i.key}>{i.title}</th>
                     ))}
+                    <th>
+                        кнопка
+                    </th>
                     </thead>
-                    <div />
                     <tbody style={{ position: 'relative' }}>
                     {virtualItems.map((virtualItem, ind) => {
                         const item = body[virtualItem.index]!;
@@ -79,8 +81,11 @@ export const Table: FC<TableProps> = ({
                                     </td>
                                 )}
                                 {order.map((key) => (
-                                    <td key={key}>{body[ind][key]}</td>
+                                    <td key={key}><input value={body[ind][key]} /></td>
                                 ))}
+                                <td>
+                                    <button>изменить</button>
+                                </td>
                             </tr>
                         );
                     })}

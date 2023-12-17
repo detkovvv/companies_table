@@ -23,42 +23,43 @@ export const CommonTable = () => {
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
 
     const handleRemoveCompany = () => {
-        dispatch(removeCompany(companyList))
+        dispatch(removeCompany(companyList));
         setCompanyList([]);
     };
 
     const handleRemoveEmployee = () => {
-        dispatch(removeEmployee(employeeList))
+        dispatch(removeEmployee(employeeList));
         setEmployeeList([]);
     };
 
-    if(isLoading){
-        return(
-            <div style={{display: 'flex'}}>...isLoading</div>
-        )
+    if (isLoading) {
+        return (
+            <div style={{ display: 'flex' }}>...isLoading</div>
+        );
     }
 
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
-            <CompanyTable data={data} onChoose={onChooseCompany} />
-            <EmployeesTable
-                currentCompany={companyList}
-                data={data}
-                onChoose={onChooseEmployee}
-            />
             <div>
                 {!!companyList.length && (
                     <button onClick={handleRemoveCompany}>
                         Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
+                <CompanyTable data={data} onChoose={onChooseCompany} />
+            </div>
+            <div>
                 {!!employeeList.length && (
                     <button onClick={handleRemoveEmployee}>
                         Удалить: ({employeeList.length}) сотрудника(ов)
                     </button>
                 )}
+                <EmployeesTable
+                    currentCompany={companyList}
+                    data={data}
+                    onChoose={onChooseEmployee}
+                />
             </div>
-
         </div>
     );
 };

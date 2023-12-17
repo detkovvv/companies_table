@@ -26,11 +26,11 @@ export const EmployeeForm: FC = () => {
     }
 
     return (
-        <form onSubmit={handleAddEmployee}>
+        <form onSubmit={handleAddEmployee} style={{display:'flex', height: '40px'}}>
             <input onChange={handleChangeSurname} placeholder='фамилия' required type='text' value={surname} />
             <input onChange={handleChangeName} placeholder='имя' required type='text' value={name} />
             <input onChange={handleChangePosition} placeholder='должность' required type='text' value={position} />
-            <button type='submit'>добавить сотрудника</button>
+            <button style={{fontSize:'12px'}} type='submit'>добавить сотрудника</button>
         </form>
     )
 };

@@ -26,10 +26,10 @@ export const CompanyForm: FC = () => {
     }
 
     return (
-        <form onSubmit={handleAddNewCompany}>
+        <form onSubmit={handleAddNewCompany} style={{display:'flex',height: '40px'}}>
             <input onChange={handleChangeName} placeholder='название компании' required type='text' value={name} />
             <input onChange={handleChangeAddress} placeholder='адрес компании' required type='text' value={address} />
-            <button type='submit'>добавить компанию</button>
+            <button style={{fontSize:'12px'}} type='submit'>добавить компанию</button>
         </form>
     )
 };
