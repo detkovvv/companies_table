@@ -1,6 +1,7 @@
 import { type FC, useMemo } from 'react';
 
 import { type CompanyFullType } from '../../utils/types';
+import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Table } from '../Table/Table';
 
 type EmployeesTableProps = {
@@ -29,13 +30,17 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
     if (currentCompany.length !== 1) return null;
 
     return (
-        <Table
-            body={employeesData}
-            head={head}
-            onChange={onChange}
-            onChoose={onChoose}
-            order={order}
-            withAction
-        />
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            <EmployeeForm />
+            <Table
+                body={employeesData}
+                head={head}
+                onChange={onChange}
+                onChoose={onChoose}
+                order={order}
+                withAction
+            />
+        </div>
+        
     );
 };

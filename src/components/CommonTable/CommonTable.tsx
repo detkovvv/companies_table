@@ -26,7 +26,6 @@ export const CommonTable = () => {
         dispatch(removeCompany(companyList))
         setCompanyList([]);
     };
-    console.log(companyList);
 
     const handleRemoveEmployee = () => {
         dispatch(removeEmployee(employeeList))

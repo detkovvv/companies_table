@@ -1,4 +1,4 @@
-
+import {CompanyForm} from '../Forms/CompanyForm';
 import { Table } from '../Table/Table';
 
 export const CompanyTable = ({ onChoose, data, onChange }) => {
@@ -13,18 +13,23 @@ export const CompanyTable = ({ onChoose, data, onChange }) => {
     const body = data.map(({ name, staff, address, id }) => ({
         name,
         staff,
-        address: address,
+        address,
         id,
     }));
 
     return (
-        <Table
-            body={body}
-            head={head}
-            onChange={onChange}
-            onChoose={onChoose}
-            order={order}
-            withAction
-        />
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            <CompanyForm />
+            <Table
+                body={body}
+                head={head}
+                onChange={onChange}
+                onChoose={onChoose}
+                order={order}
+                withAction
+            />
+        </div>
     );
 };
+
+

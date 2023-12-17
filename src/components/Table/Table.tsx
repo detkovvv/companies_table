@@ -10,7 +10,6 @@ type TableProps = {
     order: string[];
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
-    openAddElementField: () => void;
 };
 
 export const Table: FC<TableProps> = ({
@@ -19,7 +18,6 @@ export const Table: FC<TableProps> = ({
                                           order,
                                           withAction = false,
                                           onChoose,
-                                          openAddElementField,
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });
 
@@ -45,7 +43,6 @@ export const Table: FC<TableProps> = ({
         <div ref={scrollElementRef}
              style={{ height: containerHeight, overflow: 'auto', border: '1px solid lightgrey' }}>
             <div style={{ height: totalHeight }}>
-                <button onClick={openAddElementField}>Добавить новый элемент таблицы</button>
                 <table style={{ width: '100%' }}>
                     <thead>
                     {withAction && (

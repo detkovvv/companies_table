@@ -30,9 +30,10 @@ export const companiesSlice = createSlice({
             state.isLoading = false;
             state.error = action.payload;
         },
-        // checkedCompany: (state, action)=>{
-        //     state.companies.
-        // }
+        checkedCompany: (state, action:PayloadAction<string>)=>{
+           const checkedCompany = state.companies.find(company => company.id === action.payload);
+            checkedCompany.isSelected = !checkedCompany.isSelected
+        },
         addCompany: (state, action: PayloadAction<CompanyFullType>) => {
             state.companies.push(action.payload);
         },
