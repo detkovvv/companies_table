@@ -1,31 +1,19 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-export interface Employee {
-    surname: string;
-    name: string;
-    position: string;
-}
+import { type CompanyFullType } from '../../utils/types';
 
-export interface Company {
-    name: string;
-    address: string;
-    employees: Employee[];
-}
-
-export interface CompaniesState {
-    companies: Company[];
+export type StoreType = {
+    companies: CompanyFullType[];
     isLoading: boolean;
     error: string;
-
 }
 
-export const initialState: CompaniesState = {
+export const initialState: StoreType = {
     companies: [],
     isLoading: false,
     error: '',
 
 };
-
 export const companiesSlice = createSlice({
     name: 'companies',
     initialState,
@@ -33,7 +21,7 @@ export const companiesSlice = createSlice({
         companiesFetching: (state) => {
             state.isLoading = true;
         },
-        companiesFetchingSuccess: (state, action: PayloadAction<Company[]>) => {
+        companiesFetchingSuccess: (state, action: PayloadAction<CompanyFullType[]>) => {
             state.isLoading = false;
             state.error = '';
             state.companies = action.payload;

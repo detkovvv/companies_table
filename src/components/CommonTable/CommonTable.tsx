@@ -1,21 +1,28 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { mockData } from '../../utils/mockData';
+import { fetchCompanies } from '../../store/reducers/ActionCreators';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { CompanyTable } from '../CompanyTable/CompanyTable';
 import { EmployeesTable } from '../EmployeesTable/EmployeesTable';
 
 export const CommonTable = () => {
+    const data = useAppSelector(store => store.companies.companies);
+    const isLoading = useAppSelector(store => store.companies.isLoading);
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(fetchCompanies());
+    }, []);
+
     // хранит массив id выбранных компаний
     const [companyList, setCompanyList] = useState<Array<string>>([]);
     const [employeeList, setEmployeeList] = useState<Array<string>>([]);
 
-    const [data, setData] = useState(mockData);
-
     const onChooseCompany = (value: string[]) => setCompanyList(value);
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
+
     const handleRemoveCompany = () => {
         const result = data.filter(({ id }) => !companyList.includes(id));
-        setData(result);
         setCompanyList([]);
     };
 
@@ -29,17 +36,17 @@ export const CommonTable = () => {
                 ),
             };
         });
-        setData(result);
         setEmployeeList([]);
     };
 
-    // const onChangeCompany = () =>{};
-    // const onChangeEmployee = () =>{};
-    // const onAddEmployee = () =>{};
-    // const onAddEmployee = () =>{};
+    if(isLoading){
+        return(
+            <div style={{display: 'flex'}}>...isLoading</div>
+        )
+    }
 
     return (
-        <div style={{  display: 'flex', justifyContent: 'flex-start', alignItems: 'start', }}>
+        <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
             <CompanyTable data={data} onChoose={onChooseCompany} />
             <EmployeesTable
                 currentCompany={companyList}

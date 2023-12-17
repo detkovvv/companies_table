@@ -1,5 +1,6 @@
-import { companiesSlice, Company } from './CompaniesSlice';
+import { companiesSlice } from './CompaniesSlice';
 import { companiesList } from '../../utils/companiesList';
+import { arrayInsertEmployees, arrayInsertId } from '../../utils/tableHelpers';
 import { type AppDispatch } from '../store';
 
 
@@ -11,9 +12,14 @@ export const fetchCompanies = () => async (dispatch: AppDispatch) => {
                 resolve(companiesList);
             }, 2000);
         })
-        const data = await promise
+        const data = arrayInsertEmployees(
+            arrayInsertId(promise)
+        ).map((item) => ({
+            ...item,
+            employees: arrayInsertId(item.employees),
+        }));
         dispatch(companiesSlice.actions.companiesFetchingSuccess(data));
-    } catch (e){
+    } catch (error){
         dispatch(companiesSlice.actions.companiesFetchingError(error.message));
     }
 };
