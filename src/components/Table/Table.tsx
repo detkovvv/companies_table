@@ -29,7 +29,7 @@ export const Table: FC<TableProps> = ({
     } = useTable(body, onChoose);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
-    const containerHeight = 600;
+    const containerHeight = 700;
     const itemHeight = 50;
 
     const { virtualItems, totalHeight } = useFixedSizeList({
