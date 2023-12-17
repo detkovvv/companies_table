@@ -1,4 +1,4 @@
-import { type FC, useCallback, useRef } from 'react';
+import { type FC, useRef } from 'react';
 
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
@@ -36,12 +36,12 @@ export const Table: FC<TableProps> = ({
         itemHeight: itemHeight,
         itemsCount: body.length,
         listHeight: containerHeight,
-        getScrollElement: useCallback(() => scrollElementRef.current, []),
+        scrollElementRef: scrollElementRef
     });
 
     return (
         <div ref={scrollElementRef}
-             style={{ height: containerHeight, overflow: 'auto', border: '1px solid lightgrey' }}>
+             style={{ height: containerHeight, overflowX: 'hidden',overflowY:'auto', border: '1px solid lightgrey' }}>
             <div style={{ height: totalHeight }}>
                 <table>
                     <thead>

@@ -1,4 +1,4 @@
-import { useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { type RefObject, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 
 interface UseFixedSizeListProps {
     itemsCount: number;
@@ -6,27 +6,28 @@ interface UseFixedSizeListProps {
     listHeight: number;
     overScan?: number;
     scrollingDelay?: number;
-    getScrollElement: () => HTMLElement | null;
+    scrollElementRef: RefObject<HTMLElement>;
 }
 
 const DEFAULT_OVERSCAN = 3;
 const DEFAULT_SCROLLING_DELAY = 150;
 
-export  const useFixedSizeList = (props: UseFixedSizeListProps) =>{
+export const useFixedSizeList = (props: UseFixedSizeListProps) => {
     const {
         itemHeight,
         itemsCount,
         scrollingDelay = DEFAULT_SCROLLING_DELAY,
         overScan = DEFAULT_OVERSCAN,
         listHeight,
-        getScrollElement,
+        scrollElementRef,
     } = props;
 
     const [scrollTop, setScrollTop] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
 
+
     useLayoutEffect(() => {
-        const scrollElement = getScrollElement();
+        const scrollElement = scrollElementRef.current;
 
         if (!scrollElement) {
             return;
@@ -43,23 +44,21 @@ export  const useFixedSizeList = (props: UseFixedSizeListProps) =>{
         scrollElement.addEventListener('scroll', handleScroll);
 
         return () => scrollElement.removeEventListener('scroll', handleScroll);
-    }, [getScrollElement]);
+    }, []);
 
     useEffect(() => {
-        const scrollElement = getScrollElement();
+        const scrollElement = scrollElementRef.current;
 
         if (!scrollElement) {
             return;
         }
 
-        let timeoutId: number | null = null;
+        let timeoutId: number | undefined;
 
         const handleScroll = () => {
             setIsScrolling(true);
 
-            if (typeof timeoutId === 'number') {
-                clearTimeout(timeoutId);
-            }
+            clearTimeout(timeoutId);
 
             timeoutId = setTimeout(() => {
                 setIsScrolling(false);
@@ -69,12 +68,10 @@ export  const useFixedSizeList = (props: UseFixedSizeListProps) =>{
         scrollElement.addEventListener('scroll', handleScroll);
 
         return () => {
-            if (typeof timeoutId === 'number') {
-                clearTimeout(timeoutId);
-            }
+            clearTimeout(timeoutId);
             scrollElement.removeEventListener('scroll', handleScroll);
         };
-    }, [getScrollElement]);
+    }, []);
 
     const { virtualItems, startIndex, endIndex } = useMemo(() => {
         const rangeStart = scrollTop;
@@ -106,4 +103,4 @@ export  const useFixedSizeList = (props: UseFixedSizeListProps) =>{
         endIndex,
         isScrolling,
     };
-}
+};

@@ -9,11 +9,9 @@ export type EmployeeType = {
     name: string;
     position: string;
     id: string;
-    isSelected: boolean;
 };
 
 export type CompanyFullType = CompanyType & {
     stuff: number;
     id: string;
-    isSelected: boolean;
 };

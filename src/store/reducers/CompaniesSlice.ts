@@ -2,14 +2,16 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { type CompanyFullType } from '../../utils/types';
 
-export type StoreType = {
-    companies: CompanyFullType[];
+export type CompaniesStoreType = {
+    data: CompanyFullType[];
+    checked: string[];
     isLoading: boolean;
     error: string;
 }
 
-export const initialState: StoreType = {
-    companies: [],
+export const initialState: CompaniesStoreType = {
+    data: [],
+    checked: [],
     isLoading: false,
     error: '',
 
@@ -24,21 +26,20 @@ export const companiesSlice = createSlice({
         companiesFetchingSuccess: (state, action: PayloadAction<CompanyFullType[]>) => {
             state.isLoading = false;
             state.error = '';
-            state.companies = action.payload;
+            state.data = action.payload;
         },
         companiesFetchingError: (state, action: PayloadAction<string>) => {
             state.isLoading = false;
             state.error = action.payload;
         },
-        checkedCompany: (state, action:PayloadAction<string>)=>{
-           const checkedCompany = state.companies.find(company => company.id === action.payload);
-            checkedCompany.isSelected = !checkedCompany.isSelected
+        setCheckedCompany: (state, action:PayloadAction<string[]>)=>{
+            state.checked = action.payload;
         },
         addCompany: (state, action: PayloadAction<CompanyFullType>) => {
-            state.companies.push(action.payload);
+            state.data.push(action.payload);
         },
         removeCompany: (state, action:PayloadAction<string[]>) => {
-            state.companies = state.companies.filter(company => !action.payload.includes(company.id) );
+            state.data = state.data.filter(company => !action.payload.includes(company.id) );
         },
         // updateCompany: (state, action) => {
         //     const { name, address, value } = action.payload;

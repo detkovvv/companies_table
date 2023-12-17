@@ -7,7 +7,7 @@ import { CompanyTable } from '../CompanyTable/CompanyTable';
 import { EmployeesTable } from '../EmployeesTable/EmployeesTable';
 
 export const CommonTable = () => {
-    const data = useAppSelector(store => store.companies.companies);
+    const data = useAppSelector(store => store.companies.data);
     const isLoading = useAppSelector(store => store.companies.isLoading);
     const dispatch = useAppDispatch();
 

@@ -17,7 +17,6 @@ export const EmployeeForm: FC = () => {
             name: name,
             position: position,
             id: crypto.randomUUID(),
-            isSelected: false
         }
         dispatch(addEmployee(newEmployee));
         clearNameField();

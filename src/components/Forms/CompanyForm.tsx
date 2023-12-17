@@ -18,7 +18,6 @@ export const CompanyForm: FC = () => {
             employees: [],
             stuff: 0,
             id: crypto.randomUUID(),
-            isSelected: false
         }
         dispatch(addCompany(newCompany));
         clearNameField();
