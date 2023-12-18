@@ -7,11 +7,7 @@ import { setCheckedEmployee } from '../../store/reducers/EmployeesSlice';
 import { type EmployeeFullType } from '../types';
 
 
-export const useTable = (
-    body: { name:string, staff: number, address:string, id:string }[] | EmployeeFullType[],
-    tableName: 'companies' | 'employees',
-    handleChange?: (value: string[]) => void,
-) => {
+export const useTable = (body, tableName, handleChange) => {
     const checkList: string[] = useAppSelector(state => state[tableName].checked);
     const dispatch = useAppDispatch();
 

@@ -5,18 +5,33 @@ import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
-import { type EmployeeFullType } from '../../utils/types';
+import { type CompanyFullType, type EmployeeFullType,} from '../../utils/types';
 
-type TableProps = {
-    head: {name: string, staff: string, address: string} | {surname: string, name: string, position: string};
-    body: { name:string, staff: number, address:string, id:string }[] | EmployeeFullType[];
+type TableProps = (
+    | {
+    head: {
+        name: string;
+        stuff: string;
+        address: string;
+    };
+    body: CompanyFullType[];
+    tableName: 'company';
+}
+    | {
+    head: {
+        name: string;
+        surname: string;
+        position: string;
+    };
+    body: EmployeeFullType[];
+    tableName: 'employee';
+}
+    ) & {
     order: string[];
     editableColumns: string[];
-    tableName: 'companies' | 'employees';
     onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
-
 };
 
 export const Table: FC<TableProps> = ({

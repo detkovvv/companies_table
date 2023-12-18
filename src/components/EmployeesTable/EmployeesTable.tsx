@@ -30,7 +30,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     const editableColumns = ['surname', 'name', 'position'];
 
     useEffect(()=>{
-        const currentCompany: CompanyFullType = data.filter(company => company.id === companyList[0]);
+        const currentCompany = data.filter(company => company.id === companyList[0]);
         employeesFetching(currentCompany.employees);
         console.log(currentCompany);
     },[])
