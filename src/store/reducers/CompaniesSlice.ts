@@ -41,13 +41,13 @@ export const companiesSlice = createSlice({
         removeCompany: (state, action:PayloadAction<string[]>) => {
             state.data = state.data.filter(company => !action.payload.includes(company.id) );
         },
-        // updateCompany: (state, action) => {
-        //     const { name, address, value } = action.payload;
-        //     const company = state.find(c => c.name === name);
-        //     if (company) {
-        //         company[address] = value;
-        //     }
-        // },
+        updateCompany: (state, action) => {
+            const { name, address, value } = action.payload;
+            const company = state.find(c => c.name === name);
+            if (company) {
+                company[address] = value;
+            }
+        },
     },
 });
 

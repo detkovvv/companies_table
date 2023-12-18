@@ -1,7 +1,8 @@
 import { useEffect } from 'react';
 
-import { useAppSelector } from './reduxHooks';
+import { useAppDispatch, useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
+import { setCheckedCompany } from '../../store/reducers/CompaniesSlice';
 
 
 export const useTable = (
@@ -10,12 +11,13 @@ export const useTable = (
     tableName: string,
 ) => {
     const checkList = useAppSelector(state => state[tableName].checked);
+    const dispatch = useAppDispatch();
 
     const { mainCheckboxRef, setChecked, setIndeterminate, setUnchecked } =
         useMainCheckbox();
 
     const handleChangeCheckList = (value: string[]) => {
-
+        dispatch(setCheckedCompany(value))
         handleChange?.(value);
     };
 
