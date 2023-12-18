@@ -2,12 +2,13 @@ import { useEffect, useState } from 'react';
 
 import { fetchCompanies } from '../../store/reducers/ActionCreators';
 import { removeCompany } from '../../store/reducers/CompaniesSlice';
+import { removeEmployee } from '../../store/reducers/EmployeesSlice';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { CompanyTable } from '../CompanyTable/CompanyTable';
 import { EmployeesTable } from '../EmployeesTable/EmployeesTable';
 
 export const CommonTable = () => {
-    const data = useAppSelector((store) => store.companies.data);
+    const companiesData = useAppSelector((store) => store.companies.data);
     const isLoading = useAppSelector((store) => store.companies.isLoading);
     const dispatch = useAppDispatch();
 
@@ -21,8 +22,6 @@ export const CommonTable = () => {
 
     const onChooseCompany = (value: string[]) => setCompanyList(value);
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
-
-    const handleClick = () => {};
 
     const handleRemoveCompany = () => {
         dispatch(removeCompany(companyList));
@@ -46,7 +45,7 @@ export const CommonTable = () => {
                         Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
-                <CompanyTable data={data} onChoose={onChooseCompany} onClick={handleClick} />
+                <CompanyTable data={companiesData} onChoose={onChooseCompany} />
             </div>
             <div>
                 {!!employeeList.length && (
@@ -56,7 +55,7 @@ export const CommonTable = () => {
                 )}
                 <EmployeesTable
                     currentCompany={companyList}
-                    data={data}
+                    data={companiesData}
                     onChoose={onChooseEmployee}
                 />
             </div>

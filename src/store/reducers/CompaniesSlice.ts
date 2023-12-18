@@ -42,10 +42,7 @@ export const companiesSlice = createSlice({
         },
         updateCompany: (state, action) => {
             const { name, address, value } = action.payload;
-            const company = state.find(c => c.name === name);
-            if (company) {
-                company[address] = value;
-            }
+            const company = state.data.find(c => c.name === name);
         },
     },
 });

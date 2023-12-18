@@ -8,10 +8,18 @@ export type EmployeeType = {
     surname: string;
     name: string;
     position: string;
+};
+export type EmployeeFullType = {
+    surname: string;
+    name: string;
+    position: string;
     id: string;
 };
 
-export type CompanyFullType = CompanyType & {
-    stuff: number;
+export type CompanyFullType = {
+    name: string;
+    address: string;
+    employees: Array<EmployeeFullType>;
+    staff: number;
     id: string;
 };

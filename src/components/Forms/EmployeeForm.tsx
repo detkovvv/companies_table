@@ -2,7 +2,7 @@ import { type FC, type FormEvent } from 'react';
 
 import { useAppDispatch } from '../../utils/hooks/reduxHooks';
 import { useInputValue } from '../../utils/hooks/useInput';
-import { type EmployeeType } from '../../utils/types';
+import { type EmployeeFullType } from '../../utils/types';
 
 export const EmployeeForm: FC = () => {
     const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ export const EmployeeForm: FC = () => {
 
     const handleAddEmployee = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newEmployee: EmployeeType = {
+        const newEmployee: EmployeeFullType = {
             surname: surname,
             name: name,
             position: position,

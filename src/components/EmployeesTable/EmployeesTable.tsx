@@ -8,13 +8,11 @@ type EmployeesTableProps = {
     currentCompany: string[];
     data: Array<CompanyFullType>;
     onChoose: (value: string[]) => void;
-    onChange: (value: string[]) => void;
 };
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
     currentCompany,
     data,
-    onChange,
     onChoose,
 }) => {
     const head = {

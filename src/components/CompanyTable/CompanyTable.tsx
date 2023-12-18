@@ -1,7 +1,14 @@
+import { type FC } from 'react';
+
+import { type CompanyFullType } from '../../utils/types';
 import { CompanyForm } from '../Forms/CompanyForm';
 import { Table } from '../Table/Table';
 
-export const CompanyTable = ({ onChoose, data, onChange }) => {
+export const CompanyTable: FC<{ onChoose: () => void, data: CompanyFullType[], onChange: () => void }> = ({
+                                                                                                              onChoose,
+                                                                                                              data,
+                                                                                                              onChange,
+                                                                                                          }) => {
     const order = ['name', 'staff', 'address'];
     const editableColumns = ['name', 'address'];
 

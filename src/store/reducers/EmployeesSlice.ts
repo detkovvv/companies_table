@@ -1,9 +1,9 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { type EmployeeType } from '../../utils/types';
+import { type EmployeeFullType } from '../../utils/types';
 
 export type EmployeeStoreType = {
-    data: EmployeeType[];
+    data: EmployeeFullType[];
     checked: string[];
     isLoading: boolean;
     error: string;
@@ -16,16 +16,16 @@ export const initialState: EmployeeStoreType = {
     error: '',
 };
 export const employeesSlice = createSlice({
-    name: 'employee',
+    name: 'employees',
     initialState,
     reducers: {
-        employeesFetchingSuccess: (state, action: PayloadAction<EmployeeType[]>) => {
+        employeesFetchingSuccess: (state, action: PayloadAction<EmployeeFullType[]>) => {
             state.data = action.payload;
         },
         setCheckedEmployee: (state, action: PayloadAction<string[]>) => {
             state.checked = action.payload;
         },
-        addEmployee: (state, action: PayloadAction<EmployeeType>) => {
+        addEmployee: (state, action: PayloadAction<EmployeeFullType>) => {
             state.data.push(action.payload);
         },
         removeEmployee: (state, action: PayloadAction<string[]>) => {

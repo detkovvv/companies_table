@@ -3,23 +3,26 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
 import { setCheckedCompany } from '../../store/reducers/CompaniesSlice';
+import { setCheckedEmployee } from '../../store/reducers/EmployeesSlice';
 
 
 export const useTable = (
     body: Array<unknown>,
-    handleChange?: (value: string[]) => void,
     tableName: string,
+    handleChange?: (value: string[]) => void,
 ) => {
-    const checkList = useAppSelector(state => state[tableName].checked);
+    const checkList: string[] = useAppSelector(state => state[tableName].checked);
     const dispatch = useAppDispatch();
 
     const { mainCheckboxRef, setChecked, setIndeterminate, setUnchecked } =
         useMainCheckbox();
 
     const handleChangeCheckList = (value: string[]) => {
-        dispatch(setCheckedCompany(value))
+        if(tableName === 'companies') dispatch(setCheckedCompany(value));
+        if(tableName === 'employees') dispatch(setCheckedEmployee(value));
         handleChange?.(value);
     };
+    console.log(checkList);
 
     useEffect(() => {
         if (!mainCheckboxRef.current) return;
@@ -36,7 +39,7 @@ export const useTable = (
 
     const handleChangeCheckboxes = (id: string) => () => {
         if (checkList.includes(id)) {
-            handleChangeCheckList(checkList.filter((i) => i !== id));
+            handleChangeCheckList(checkList.filter((i: string) => i !== id));
         } else {
             handleChangeCheckList([...checkList, id]);
         }
