@@ -18,8 +18,8 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
         name: 'Имя',
         position: 'Должность',
     };
-
     const order = ['surname', 'name', 'position'];
+    const editableColumns = ['surname', 'name', 'position'];
 
     const employeesData = useMemo(() => {
         if (!currentCompany || currentCompany.length !== 1) return [];
@@ -34,6 +34,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
             <EmployeeForm />
             <Table
                 body={employeesData}
+                editableColumns={editableColumns}
                 head={head}
                 name={'employees'}
                 onChange={onChange}

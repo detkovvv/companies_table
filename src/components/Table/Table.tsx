@@ -1,5 +1,6 @@
-import { type FC, useRef } from 'react';
+import { type FC, useCallback, useRef } from 'react';
 
+import { TableCell } from './TableCell';
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
@@ -8,6 +9,8 @@ type TableProps = {
     head: object;
     body: Array<object>;
     order: string[];
+    editableColumns: string[];
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
     onClick?: (id: string, key: string) => () => void;
@@ -19,6 +22,8 @@ export const Table: FC<TableProps> = ({
                                           body,
                                           order,
                                           withAction = false,
+                                          editableColumns,
+                                          onChangeCell,
                                           onChoose,
                                           onClick,
                                           name,
@@ -33,7 +38,7 @@ export const Table: FC<TableProps> = ({
     } = useTable(body, onChoose, name);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
-    const containerHeight = 700;
+    const containerHeight = 600;
     const itemHeight = 50;
 
     const { virtualItems, totalHeight } = useFixedSizeList({
@@ -66,12 +71,15 @@ export const Table: FC<TableProps> = ({
                     {virtualItems.map((virtualItem, ind) => {
                         const item = body[virtualItem.index]!;
                         return (
-                            <tr key={item.id} style={{
-                                height: itemHeight,
-                                position: 'absolute',
-                                top: 0,
-                                transform: `translateY(${virtualItem.offsetTop}px)`,
-                            }}>
+                            <tr
+                                key={item.id}
+                                style={{
+                                    height: itemHeight,
+                                    position: 'absolute',
+                                    top: 0,
+                                    transform: `translateY(${virtualItem.offsetTop}px)`,
+                                 }}
+                            >
                                 {withAction && (
                                     <td>
                                         <input
@@ -81,10 +89,20 @@ export const Table: FC<TableProps> = ({
                                         />
                                     </td>
                                 )}
-                                {order.map((key) => (
-                                    <td key={key} onClick={onClick?.(item.id, key)}><input value={body[ind][key]} />
-                                    </td>
-                                ))}
+                                {order.map((key) => {
+                                    const currentElem = body[ind];
+                                    return (
+                                        <TableCell
+                                            columnId={key}
+                                            editable={editableColumns.includes(key)}
+                                            key={key}
+                                            onChange={onChangeCell}
+                                            rowId={item.id}
+                                        >
+                                            {currentElem[key as keyof typeof currentElem]}
+                                        </TableCell>
+                                    );
+                                })}
                             </tr>
                         );
                     })}

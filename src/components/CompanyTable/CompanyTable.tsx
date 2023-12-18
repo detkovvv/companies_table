@@ -3,6 +3,7 @@ import { Table } from '../Table/Table';
 
 export const CompanyTable = ({ onChoose, data, onChange }) => {
     const order = ['name', 'staff', 'address'];
+        const editableColumns = ['name', 'address'];
 
     const head = {
         name: 'Название компании',
@@ -18,10 +19,11 @@ export const CompanyTable = ({ onChoose, data, onChange }) => {
     }));
 
     return (
-        <div style={{display: 'flex', flexDirection: 'column'}}>
+        <div style={{ display: 'flex', flexDirection: 'column' }}>
             <CompanyForm />
             <Table
                 body={body}
+                editableColumns={editableColumns}
                 head={head}
                 name={'companies'}
                 onChange={onChange}
@@ -33,5 +35,3 @@ export const CompanyTable = ({ onChoose, data, onChange }) => {
         </div>
     );
 };
-
-
