@@ -1,7 +1,7 @@
 import { type FC, useEffect } from 'react';
 
 import { employeesFetching } from '../../store/reducers/EmployeesSlice';
-import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
+import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { type CompanyFullType } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Table } from '../Table/Table';
@@ -20,7 +20,6 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
 
     const employeesData = useAppSelector(state => state.employees.data);
     const isLoading = useAppSelector(state => state.employees.isLoading);
-    const dispatch = useAppDispatch();
 
     const head = {
         surname: 'Фамилия',
@@ -47,11 +46,10 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 body={employeesData}
                 editableColumns={editableColumns}
                 head={head}
-                order={order}
-                withAction
-                tableName={'employees'}
-                // onChange={onChangeCell}
                 onChoose={onChoose}
+                order={order}
+                tableName={'employees'}
+                withAction
             />
         </div>
     );

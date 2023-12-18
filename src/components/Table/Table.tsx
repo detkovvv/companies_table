@@ -5,13 +5,14 @@ import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
+import { type EmployeeFullType } from '../../utils/types';
 
 type TableProps = {
-    head: object;
-    body: Array<object>;
+    head: {name: string, staff: string, address: string} | {surname: string, name: string, position: string};
+    body: { name:string, staff: number, address:string, id:string }[] | EmployeeFullType[];
     order: string[];
     editableColumns: string[];
-    tableName: string;
+    tableName: 'companies' | 'employees';
     onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
@@ -100,7 +101,6 @@ export const Table: FC<TableProps> = ({
                                             columnId={key}
                                             editable={editableColumns.includes(key)}
                                             key={key}
-                                            // onChange={onChangeCell}
                                             rowId={item.id}
                                         >
                                             {currentElem[key as keyof typeof currentElem]}

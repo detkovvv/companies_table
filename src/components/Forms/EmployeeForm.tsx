@@ -1,5 +1,6 @@
 import { type FC, type FormEvent } from 'react';
 
+import { addEmployee } from '../../store/reducers/EmployeesSlice';
 import { useAppDispatch } from '../../utils/hooks/reduxHooks';
 import { useInputValue } from '../../utils/hooks/useInput';
 import { type EmployeeFullType } from '../../utils/types';

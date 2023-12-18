@@ -4,11 +4,12 @@ import { useAppDispatch, useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
 import { setCheckedCompany } from '../../store/reducers/CompaniesSlice';
 import { setCheckedEmployee } from '../../store/reducers/EmployeesSlice';
+import { type EmployeeFullType } from '../types';
 
 
 export const useTable = (
-    body: Array<unknown>,
-    tableName: string,
+    body: { name:string, staff: number, address:string, id:string }[] | EmployeeFullType[],
+    tableName: 'companies' | 'employees',
     handleChange?: (value: string[]) => void,
 ) => {
     const checkList: string[] = useAppSelector(state => state[tableName].checked);
