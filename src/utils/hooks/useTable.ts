@@ -4,7 +4,6 @@ import { useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
 
 
-// хук для управления логикой чекбоксов
 export const useTable = (
     body: Array<unknown>,
     handleChange?: (value: string[]) => void,

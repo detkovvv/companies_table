@@ -35,11 +35,11 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
             <Table
                 body={employeesData}
                 head={head}
+                name={'employees'}
                 onChange={onChange}
                 onChoose={onChoose}
                 order={order}
-                withAction,
-            name={'employees'}
+                withAction
             />
         </div>
 
