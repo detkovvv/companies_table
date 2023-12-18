@@ -16,7 +16,6 @@ export const CommonTable = () => {
         dispatch(fetchCompanies());
     }, []);
 
-    // хранит массив id выбранных компаний
     const [companyList, setCompanyList] = useState<Array<string>>([]);
     const [employeeList, setEmployeeList] = useState<Array<string>>([]);
 

@@ -17,8 +17,11 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                                                             data,
                                                             onChoose,
                                                         }) => {
+
     const employeesData = useAppSelector(state => state.employees.data);
+    const isLoading = useAppSelector(state => state.employees.isLoading);
     const dispatch = useAppDispatch();
+
     const head = {
         surname: 'Фамилия',
         name: 'Имя',
@@ -29,10 +32,11 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
 
     useEffect(()=>{
         const currentCompany: CompanyFullType = data.filter(company => company.id === companyList[0]);
-        dispatch(employeesFetching(currentCompany.employees));
+        employeesFetching(currentCompany.employees);
+        console.log(currentCompany);
     },[])
 
-    if (!employeesData) {
+    if (isLoading) {
         return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
 
@@ -43,11 +47,11 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 body={employeesData}
                 editableColumns={editableColumns}
                 head={head}
-                name={'employees'}
-                // onChange={onChangeCell}
-                onChoose={onChoose}
                 order={order}
                 withAction
+                tableName={'employees'}
+                // onChange={onChangeCell}
+                onChoose={onChoose}
             />
         </div>
     );

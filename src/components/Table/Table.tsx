@@ -1,6 +1,7 @@
 import { type FC, useRef } from 'react';
 
 import { TableCell } from './TableCell';
+import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
@@ -10,7 +11,7 @@ type TableProps = {
     body: Array<object>;
     order: string[];
     editableColumns: string[];
-    name: string;
+    tableName: string;
     onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
@@ -21,15 +22,17 @@ export const Table: FC<TableProps> = ({
                                           head,
                                           body,
                                           order,
-                                          name,
+                                          tableName,
                                           withAction = false,
                                           editableColumns,
                                           onChoose,
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });
 
-    const { mainCheckboxRef, handleChangeMainCheckbox, checkList, handleChangeCheckboxes } =
-        useTable(body, name, onChoose);
+    const { mainCheckboxRef, handleChangeMainCheckbox, handleChangeCheckboxes } =
+        useTable(body, tableName, onChoose);
+
+    const checkList: string[] = useAppSelector(state => state[tableName].checked);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
     const containerHeight = 600;

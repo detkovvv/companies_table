@@ -11,7 +11,6 @@ export const CompanyTable: FC<{
 }> = ({
           onChoose,
           data,
-          onChangeCell,
       }) => {
 
     const order = ['name', 'staff', 'address'];
@@ -37,12 +36,12 @@ export const CompanyTable: FC<{
                 body={body}
                 editableColumns={editableColumns}
                 head={head}
-                name={'companies'}
+                order={order}
+                // onClick={(id, key) => () => console.log(id, key)}
+                withAction
+                tableName={'companies'}
                 // onChange={onChangeCell}
                 onChoose={onChoose}
-                // onClick={(id, key) => () => console.log(id, key)}
-                order={order}
-                withAction
             />
         </div>
     );

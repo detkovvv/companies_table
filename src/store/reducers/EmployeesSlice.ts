@@ -12,7 +12,7 @@ export type EmployeeStoreType = {
 export const initialState: EmployeeStoreType = {
     data: [],
     checked: [],
-    isLoading: false,
+    isLoading: true,
     error: '',
 };
 export const employeesSlice = createSlice({
