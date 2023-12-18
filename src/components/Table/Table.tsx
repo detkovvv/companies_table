@@ -11,11 +11,11 @@ type TableProps = (
     | {
     head: {
         name: string;
-        stuff: string;
+        staff: string;
         address: string;
     };
     body: CompanyFullType[];
-    tableName: 'company';
+    tableName: 'companies';
 }
     | {
     head: {
@@ -24,7 +24,7 @@ type TableProps = (
         position: string;
     };
     body: EmployeeFullType[];
-    tableName: 'employee';
+    tableName: 'employees';
 }
     ) & {
     order: string[];

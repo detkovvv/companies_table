@@ -1,4 +1,5 @@
 import { type FC, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { employeesFetching } from '../../store/reducers/EmployeesSlice';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
@@ -20,6 +21,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
 
     const employeesData = useAppSelector(state => state.employees.data);
     const isLoading = useAppSelector(state => state.employees.isLoading);
+    const dispatch = useDispatch();
 
     const head = {
         surname: 'Фамилия',
@@ -31,7 +33,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
 
     useEffect(()=>{
         const currentCompany = data.filter(company => company.id === companyList[0]);
-        employeesFetching(currentCompany.employees);
+        dispatch(employeesFetching(currentCompany.employees));
         console.log(currentCompany);
     },[])
 

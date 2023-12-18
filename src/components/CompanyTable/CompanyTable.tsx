@@ -21,26 +21,17 @@ export const CompanyTable: FC<{
         address: 'Адрес',
     };
 
-    const body = data.map(({ name, staff, address, id }) => ({
-        name,
-        staff,
-        address,
-        id,
-    }));
-
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
             <CompanyForm />
             <Table
-                body={body}
+                body={data}
                 editableColumns={editableColumns}
                 head={head}
-                order={order}
-                // onClick={(id, key) => () => console.log(id, key)}
-                withAction
-                tableName={'companies'}
-                // onChange={onChangeCell}
                 onChoose={onChoose}
+                order={order}
+                tableName={'companies'}
+                withAction
             />
         </div>
     );

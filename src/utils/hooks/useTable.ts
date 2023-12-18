@@ -4,10 +4,13 @@ import { useAppDispatch, useAppSelector } from './reduxHooks';
 import { useMainCheckbox } from './useMainCheckBox';
 import { setCheckedCompany } from '../../store/reducers/CompaniesSlice';
 import { setCheckedEmployee } from '../../store/reducers/EmployeesSlice';
-import { type EmployeeFullType } from '../types';
+import { type CompanyFullType, type EmployeeFullType } from '../types';
 
-
-export const useTable = (body, tableName, handleChange) => {
+export const useTable = (
+    body: CompanyFullType[] | EmployeeFullType[],
+    tableName: 'companies' | 'employees',
+    handleChange: ((value: string[]) => void) | undefined,
+) => {
     const checkList: string[] = useAppSelector(state => state[tableName].checked);
     const dispatch = useAppDispatch();
 
@@ -15,8 +18,8 @@ export const useTable = (body, tableName, handleChange) => {
         useMainCheckbox();
 
     const handleChangeCheckList = (value: string[]) => {
-        if(tableName === 'companies') dispatch(setCheckedCompany(value));
-        if(tableName === 'employees') dispatch(setCheckedEmployee(value));
+        if (tableName === 'companies') dispatch(setCheckedCompany(value));
+        if (tableName === 'employees') dispatch(setCheckedEmployee(value));
         handleChange?.(value);
     };
 
