@@ -29,11 +29,12 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
 
     useEffect(()=>{
         const currentCompany: CompanyFullType = data.filter(company => company.id === companyList[0]);
-        console.log(currentCompany);
         dispatch(employeesFetching(currentCompany.employees));
     },[])
 
-
+    if (!employeesData) {
+        return <div style={{ display: 'flex' }}>...isLoading</div>;
+    }
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>

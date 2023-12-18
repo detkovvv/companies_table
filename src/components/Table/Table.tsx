@@ -24,7 +24,6 @@ export const Table: FC<TableProps> = ({
                                           name,
                                           withAction = false,
                                           editableColumns,
-                                          onChangeCell,
                                           onChoose,
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });

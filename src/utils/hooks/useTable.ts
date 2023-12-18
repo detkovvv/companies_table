@@ -27,14 +27,17 @@ export const useTable = (
         if (!mainCheckboxRef.current) return;
         if (checkList.length === body.length) {
             setChecked();
+            console.log(body);
         }
         if (checkList.length === 0) {
             setUnchecked();
+            console.log(body);
         }
         if (checkList.length > 0 && checkList.length < body.length) {
             setIndeterminate();
+            console.log(body);
         }
-    }, [checkList.length, body.length]);
+    }, [checkList.length, body]);
 
     const handleChangeCheckboxes = (id: string) => () => {
         if (checkList.includes(id)) {
