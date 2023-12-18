@@ -11,8 +11,12 @@ type EmployeesTableProps = {
     onChange: (value: string[]) => void;
 };
 
-export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, onChange, onChoose }) => {
-
+export const EmployeesTable: FC<EmployeesTableProps> = ({
+    currentCompany,
+    data,
+    onChange,
+    onChoose,
+}) => {
     const head = {
         surname: 'Фамилия',
         name: 'Имя',
@@ -43,6 +47,5 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ currentCompany, data, 
                 withAction
             />
         </div>
-
     );
 };

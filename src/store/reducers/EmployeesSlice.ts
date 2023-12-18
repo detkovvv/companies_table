@@ -2,20 +2,18 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { type EmployeeType } from '../../utils/types';
 
-
 export type EmployeeStoreType = {
     data: EmployeeType[];
     checked: string[];
     isLoading: boolean;
     error: string;
-}
+};
 
 export const initialState: EmployeeStoreType = {
     data: [],
     checked: [],
     isLoading: false,
     error: '',
-
 };
 export const employeesSlice = createSlice({
     name: 'employee',
@@ -24,14 +22,14 @@ export const employeesSlice = createSlice({
         employeesFetchingSuccess: (state, action: PayloadAction<EmployeeType[]>) => {
             state.data = action.payload;
         },
-        setCheckedEmployee: (state, action:PayloadAction<string[]>)=>{
+        setCheckedEmployee: (state, action: PayloadAction<string[]>) => {
             state.checked = action.payload;
         },
         addEmployee: (state, action: PayloadAction<EmployeeType>) => {
             state.data.push(action.payload);
         },
-        removeEmployee: (state, action:PayloadAction<string[]>) => {
-            state.data = state.data.filter(employee => !action.payload.includes(employee.id) );
+        removeEmployee: (state, action: PayloadAction<string[]>) => {
+            state.data = state.data.filter((employee) => !action.payload.includes(employee.id));
         },
         // updateCompany: (state, action) => {
         //     const { name, address, value } = action.payload;
@@ -43,4 +41,5 @@ export const employeesSlice = createSlice({
     },
 });
 
-export const { employeesFetchingSuccess, setCheckedEmployee, addEmployee, removeEmployee } = employeesSlice.actions;
+export const { employeesFetchingSuccess, setCheckedEmployee, addEmployee, removeEmployee } =
+    employeesSlice.actions;

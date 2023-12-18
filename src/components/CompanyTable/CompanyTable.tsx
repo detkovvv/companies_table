@@ -1,9 +1,9 @@
-import {CompanyForm} from '../Forms/CompanyForm';
+import { CompanyForm } from '../Forms/CompanyForm';
 import { Table } from '../Table/Table';
 
 export const CompanyTable = ({ onChoose, data, onChange }) => {
     const order = ['name', 'staff', 'address'];
-        const editableColumns = ['name', 'address'];
+    const editableColumns = ['name', 'address'];
 
     const head = {
         name: 'Название компании',
@@ -28,7 +28,7 @@ export const CompanyTable = ({ onChoose, data, onChange }) => {
                 name={'companies'}
                 onChange={onChange}
                 onChoose={onChoose}
-                onClick={(id, key)=>()=>console.log(id, key)}
+                onClick={(id, key) => () => console.log(id, key)}
                 order={order}
                 withAction
             />

@@ -1,4 +1,11 @@
-import React, { type ChangeEvent, type FC, type KeyboardEventHandler, useEffect, useRef, useState, } from 'react';
+import React, {
+    type ChangeEvent,
+    type FC,
+    type KeyboardEventHandler,
+    useEffect,
+    useRef,
+    useState,
+} from 'react';
 
 type TableCellProps = {
     rowId: string;

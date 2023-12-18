@@ -8,10 +8,18 @@
         "eslint:recommended",
         "plugin:react/recommended",
         "plugin:import/recommended",
-        "plugin:@typescript-eslint/recommended"
-        //    "prettier"
+        "plugin:@typescript-eslint/recommended",
+        "prettier"
     ],
     "overrides": [
+        {
+            "files": "*.d.ts",
+            "rules": {
+                "spaced-comment": [
+                    "off"
+                ]
+            }
+        }
     ],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -27,11 +35,6 @@
         "import/resolver": {
             "typescript": {
                 "alwaysTryTypes": true,
-                // always try to resolve types under `<root>@types` directory even it doesn't contain any source code, like `@types/unist`
-
-                // Choose from one of the "project" configs below or omit to use <root>/tsconfig.json by default
-
-                // use <root>/path/to/folder/tsconfig.json
                 "project": [
                     "path/to/folder",
                     "packages/*/tsconfig.json",

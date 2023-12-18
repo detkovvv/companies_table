@@ -6,13 +6,9 @@ import { CommonTable } from '../components/CommonTable/CommonTable';
 import { store } from '../store/store';
 
 export const App = () => {
-
     return (
         <Provider store={store}>
-           <CommonTable />
+            <CommonTable />
         </Provider>
-
     );
 };
-
-

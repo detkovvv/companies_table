@@ -7,8 +7,8 @@ import { CompanyTable } from '../CompanyTable/CompanyTable';
 import { EmployeesTable } from '../EmployeesTable/EmployeesTable';
 
 export const CommonTable = () => {
-    const data = useAppSelector(store => store.companies.data);
-    const isLoading = useAppSelector(store => store.companies.isLoading);
+    const data = useAppSelector((store) => store.companies.data);
+    const isLoading = useAppSelector((store) => store.companies.isLoading);
     const dispatch = useAppDispatch();
 
     useEffect(() => {
@@ -22,9 +22,7 @@ export const CommonTable = () => {
     const onChooseCompany = (value: string[]) => setCompanyList(value);
     const onChooseEmployee = (value: string[]) => setEmployeeList(value);
 
-    const handleClick = ()=>{
-
-    }
+    const handleClick = () => {};
 
     const handleRemoveCompany = () => {
         dispatch(removeCompany(companyList));
@@ -37,9 +35,7 @@ export const CommonTable = () => {
     };
 
     if (isLoading) {
-        return (
-            <div style={{ display: 'flex' }}>...isLoading</div>
-        );
+        return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
 
     return (

@@ -25,7 +25,6 @@ export const useFixedSizeList = (props: UseFixedSizeListProps) => {
     const [scrollTop, setScrollTop] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
 
-
     useLayoutEffect(() => {
         const scrollElement = scrollElementRef.current;
 
