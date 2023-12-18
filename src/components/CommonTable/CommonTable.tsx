@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { fetchCompanies } from '../../store/reducers/ActionCreators';
-import { removeCompany } from '../../store/reducers/CompaniesSlice';
+import { removeCompany, updateCompany } from '../../store/reducers/CompaniesSlice';
 import { removeEmployee } from '../../store/reducers/EmployeesSlice';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { CompanyTable } from '../CompanyTable/CompanyTable';
@@ -34,6 +34,12 @@ export const CommonTable = () => {
     if (isLoading) {
         return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
+    const onChangeCompaniesCell =(obj)=>{
+        dispatch(updateCompany(obj))
+    }
+    const onChangeEmployeesCell =(obj)=>{
+        dispatch(updateCompany(obj))
+    }
 
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
@@ -43,7 +49,7 @@ export const CommonTable = () => {
                         Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
-                <CompanyTable data={companiesData} onChoose={onChooseCompany} />
+                <CompanyTable data={companiesData} onChangeCompaniesCell={onChangeCompaniesCell} onChoose={onChooseCompany} />
             </div>
             <div>
                 {!!employeeList.length && (

@@ -7,6 +7,7 @@ import { Table } from '../Table/Table';
 export const CompanyTable: FC<{
     onChoose: (value: string[]) => void,
     data: CompanyFullType[],
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 }> = ({
           onChoose,
           data,

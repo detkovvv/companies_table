@@ -7,18 +7,17 @@ import React, {
     useState,
 } from 'react';
 
+
 type TableCellProps = {
     rowId: string;
     columnId: string;
     children: string;
     editable: boolean;
-    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const TableCell: FC<TableCellProps> = ({
                                                   children,
                                                   editable,
-                                                  onChangeCell,
                                                   rowId,
                                                   columnId,
                                               }) => {
@@ -38,12 +37,14 @@ export const TableCell: FC<TableCellProps> = ({
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
+            onChangeCompaniesCell?.({ rowId, columnId, value: event.currentTarget.value });
             (inputRef.current as HTMLInputElement).blur();
+            if (editable) setShowInput(!showInput);
         }
     };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => setInputState(e.currentTarget.value);
+
 
     return (
         <td onClick={handleClick}>

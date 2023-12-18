@@ -15,6 +15,8 @@ export const initialState: CompaniesStoreType = {
     isLoading: false,
     error: '',
 };
+
+
 export const companiesSlice = createSlice({
     name: 'companies',
     initialState,
@@ -35,14 +37,22 @@ export const companiesSlice = createSlice({
             state.checked = action.payload;
         },
         addCompany: (state, action: PayloadAction<CompanyFullType>) => {
-            state.data.push(action.payload);
+            state.data.push(action.payload)
         },
         removeCompany: (state, action: PayloadAction<string[]>) => {
             state.data = state.data.filter((company) => !action.payload.includes(company.id));
         },
-        updateCompany: (state, action) => {
-            const { name, address, value } = action.payload;
-            const company = state.data.find(c => c.name === name);
+        updateCompany: (state, action: PayloadAction<{ rowId: string, columnId: 'name' | 'address', value: string | number }>) => {
+            const { rowId, columnId, value } = action.payload;
+            state.data = state.data.map((company) => {
+                if (company && company.id === rowId) {
+                    return {
+                        ...(company as CompanyFullType),
+                        [columnId]: value,
+                    };
+                }
+                return company;
+            });
         },
     },
 });

@@ -33,15 +33,20 @@ export const employeesSlice = createSlice({
         removeEmployee: (state, action: PayloadAction<string[]>) => {
             state.data = state.data.filter((employee) => !action.payload.includes(employee.id));
         },
-        // updateCompany: (state, action) => {
-        //     const { name, address, value } = action.payload;
-        //     const company = state.find(c => c.name === name);
-        //     if (company) {
-        //         company[address] = value;
-        //     }
-        // },
+        updateEmployee: (state, action: PayloadAction<{ rowId: string, columnId: 'surname' | 'name' | 'position', value: string | number }>) => {
+            const { rowId, columnId, value } = action.payload;
+            state.data = state.data.map((employee) => {
+                if (employee && employee.id === rowId) {
+                    return {
+                        ...(employee as EmployeeFullType),
+                        [columnId]: value,
+                    };
+                }
+                return employee;
+            });
+        },
     },
 });
 
-export const { employeesFetching, setCheckedEmployee, addEmployee, removeEmployee } =
+export const { employeesFetching, setCheckedEmployee, addEmployee, removeEmployee, updateEmployee } =
     employeesSlice.actions;
