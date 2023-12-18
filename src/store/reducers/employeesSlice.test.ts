@@ -1,5 +1,5 @@
-// eslint-disable-next-line import/no-unresolved
-import { test, expect } from 'vtest';
+
+import { test, expect } from 'vitest';
 
 import { employeesSlice } from './EmployeesSlice';
 

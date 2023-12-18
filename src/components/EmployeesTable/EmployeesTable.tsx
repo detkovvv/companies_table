@@ -15,10 +15,9 @@ type EmployeesTableProps = {
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
                                                             companyList,
-                                                            data,
                                                             onChoose,
                                                         }) => {
-
+    const companiesData = useAppSelector((store) => store.companies.data);
     const employeesData = useAppSelector(state => state.employees.data);
     const isLoading = useAppSelector(state => state.employees.isLoading);
     const dispatch = useDispatch();
@@ -32,8 +31,8 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     const editableColumns = ['surname', 'name', 'position'];
 
     useEffect(()=>{
-        const currentCompany = data.filter(company => company.id === companyList[0]);
-        dispatch(employeesFetching(currentCompany.employees));
+        const currentCompany = companiesData.find(company => company.id === companyList[0]);
+        if(currentCompany) dispatch(employeesFetching(currentCompany.employees));
         console.log(currentCompany);
     },[])
 
