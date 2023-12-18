@@ -38,9 +38,9 @@ export const CompanyTable: FC<{
                 editableColumns={editableColumns}
                 head={head}
                 name={'companies'}
-                onChange={onChangeCell}
+                // onChange={onChangeCell}
                 onChoose={onChoose}
-                onClick={(id, key) => () => console.log(id, key)}
+                // onClick={(id, key) => () => console.log(id, key)}
                 order={order}
                 withAction
             />

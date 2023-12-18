@@ -52,11 +52,11 @@ export const CommonTable = () => {
                         Удалить: ({employeeList.length}) сотрудника(ов)
                     </button>
                 )}
-                <EmployeesTable
+                {companyList.length === 1 && (<EmployeesTable
                     companyList={companyList}
                     data={companiesData}
                     onChoose={onChooseEmployee}
-                />
+                />)}
             </div>
         </div>
     );

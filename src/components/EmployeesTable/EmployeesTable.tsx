@@ -1,4 +1,4 @@
-import { type FC, useMemo } from 'react';
+import { type FC, useEffect } from 'react';
 
 import { employeesFetching } from '../../store/reducers/EmployeesSlice';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
@@ -10,18 +10,15 @@ type EmployeesTableProps = {
     companyList: string[];
     data: CompanyFullType[];
     onChoose: (value: string[]) => void;
-    onChangeCell: (value: { rowId: string; columnId: string; value: string | number }) => void
 };
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
                                                             companyList,
                                                             data,
                                                             onChoose,
-                                                            onChangeCell,
                                                         }) => {
     const employeesData = useAppSelector(state => state.employees.data);
     const dispatch = useAppDispatch();
-
     const head = {
         surname: 'Фамилия',
         name: 'Имя',
@@ -30,13 +27,12 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     const order = ['surname', 'name', 'position'];
     const editableColumns = ['surname', 'name', 'position'];
 
-    if (companyList.length !== 1) {
-        return null;
-    } else{
-        const currentCompany = data.filter(company => company.id === companyList[0]);
+    useEffect(()=>{
+        const currentCompany: CompanyFullType = data.filter(company => company.id === companyList[0]);
         console.log(currentCompany);
-        dispatch(employeesFetching(currentCompany));
-    }
+        dispatch(employeesFetching(currentCompany.employees));
+    },[])
+
 
 
     return (
@@ -47,7 +43,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 editableColumns={editableColumns}
                 head={head}
                 name={'employees'}
-                onChange={onChangeCell}
+                // onChange={onChangeCell}
                 onChoose={onChoose}
                 order={order}
                 withAction

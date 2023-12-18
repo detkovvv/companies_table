@@ -98,7 +98,7 @@ export const Table: FC<TableProps> = ({
                                             columnId={key}
                                             editable={editableColumns.includes(key)}
                                             key={key}
-                                            onChange={onChangeCell}
+                                            // onChange={onChangeCell}
                                             rowId={item.id}
                                         >
                                             {currentElem[key as keyof typeof currentElem]}
