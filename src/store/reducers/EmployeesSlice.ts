@@ -19,8 +19,10 @@ export const employeesSlice = createSlice({
     name: 'employees',
     initialState,
     reducers: {
-        employeesFetchingSuccess: (state, action: PayloadAction<EmployeeFullType[]>) => {
+        employeesFetching: (state, action: PayloadAction<EmployeeFullType[]>) => {
             state.data = action.payload;
+            state.isLoading = false;
+            state.error = '';
         },
         setCheckedEmployee: (state, action: PayloadAction<string[]>) => {
             state.checked = action.payload;
@@ -41,5 +43,5 @@ export const employeesSlice = createSlice({
     },
 });
 
-export const { employeesFetchingSuccess, setCheckedEmployee, addEmployee, removeEmployee } =
+export const { employeesFetching, setCheckedEmployee, addEmployee, removeEmployee } =
     employeesSlice.actions;

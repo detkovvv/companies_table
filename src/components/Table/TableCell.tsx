@@ -12,16 +12,17 @@ type TableCellProps = {
     columnId: string;
     children: string;
     editable: boolean;
-    onChange?: (value: { rowId: string; columnId: string; value: string | number }) => void;
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const TableCell: FC<TableCellProps> = ({
-    children,
-    editable,
-    onChange,
-    rowId,
-    columnId,
-}) => {
+                                                  children,
+                                                  editable,
+                                                  onChangeCell,
+                                                  rowId,
+                                                  columnId,
+                                              }) => {
+
     const [showInput, setShowInput] = useState(false);
     const [inputState, setInputState] = useState(children);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -37,7 +38,7 @@ export const TableCell: FC<TableCellProps> = ({
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            onChange?.({ rowId, columnId, value: event.currentTarget.value });
+            onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
             (inputRef.current as HTMLInputElement).blur();
         }
     };

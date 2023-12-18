@@ -32,7 +32,6 @@ export const CommonTable = () => {
         dispatch(removeEmployee(employeeList));
         setEmployeeList([]);
     };
-
     if (isLoading) {
         return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
@@ -54,7 +53,7 @@ export const CommonTable = () => {
                     </button>
                 )}
                 <EmployeesTable
-                    currentCompany={companyList}
+                    companyList={companyList}
                     data={companiesData}
                     onChoose={onChooseEmployee}
                 />

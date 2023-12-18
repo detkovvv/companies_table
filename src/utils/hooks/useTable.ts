@@ -22,7 +22,6 @@ export const useTable = (
         if(tableName === 'employees') dispatch(setCheckedEmployee(value));
         handleChange?.(value);
     };
-    console.log(checkList);
 
     useEffect(() => {
         if (!mainCheckboxRef.current) return;

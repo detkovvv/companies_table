@@ -1,20 +1,27 @@
 import { type FC, useMemo } from 'react';
 
+import { employeesFetching } from '../../store/reducers/EmployeesSlice';
+import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { type CompanyFullType } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Table } from '../Table/Table';
 
 type EmployeesTableProps = {
-    currentCompany: string[];
-    data: Array<CompanyFullType>;
+    companyList: string[];
+    data: CompanyFullType[];
     onChoose: (value: string[]) => void;
+    onChangeCell: (value: { rowId: string; columnId: string; value: string | number }) => void
 };
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
-    currentCompany,
-    data,
-    onChoose,
-}) => {
+                                                            companyList,
+                                                            data,
+                                                            onChoose,
+                                                            onChangeCell,
+                                                        }) => {
+    const employeesData = useAppSelector(state => state.employees.data);
+    const dispatch = useAppDispatch();
+
     const head = {
         surname: 'Фамилия',
         name: 'Имя',
@@ -23,13 +30,14 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     const order = ['surname', 'name', 'position'];
     const editableColumns = ['surname', 'name', 'position'];
 
-    const employeesData = useMemo(() => {
-        if (!currentCompany || currentCompany.length !== 1) return [];
+    if (companyList.length !== 1) {
+        return null;
+    } else{
+        const currentCompany = data.filter(company => company.id === companyList[0]);
+        console.log(currentCompany);
+        dispatch(employeesFetching(currentCompany));
+    }
 
-        return data.find(({ id }) => currentCompany.includes(id)).employees || [];
-    }, [currentCompany, data]);
-
-    if (currentCompany.length !== 1) return null;
 
     return (
         <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -39,7 +47,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 editableColumns={editableColumns}
                 head={head}
                 name={'employees'}
-                onChange={onChange}
+                onChange={onChangeCell}
                 onChoose={onChoose}
                 order={order}
                 withAction
