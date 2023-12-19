@@ -11,7 +11,7 @@ export const CompanyTable: FC<{
 }> = ({
           onChoose,
           data,
-                                     onChangeCell
+          onChangeCell,
       }) => {
 
     const order = ['name', 'staff', 'address'];

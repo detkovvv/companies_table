@@ -74,10 +74,10 @@ export const Table: FC<TableProps> = ({
             }}
         >
             <div style={{ height: totalHeight }}>
-                <table>
-                    <thead>
+                <table style={{width: '100%', marginBottom:'20px'}}>
+                    <thead style={{background: '#efefef'}}>
                     {withAction && (
-                        <th>
+                        <th style={{width: '20px'}}>
                             <input
                                 onChange={handleChangeMainCheckbox}
                                 ref={mainCheckboxRef}
@@ -86,7 +86,7 @@ export const Table: FC<TableProps> = ({
                         </th>
                     )}
                     {sortedHead.map((i) => (
-                        <th key={i.key}>{i.title}</th>
+                        <th key={i.key} style={{width: '200px' , padding: '5px', border: '1px solid #dddddd'}}>{i.title}</th>
                     ))}
                     </thead>
                     <tbody style={{ position: 'relative' }}>
@@ -103,7 +103,7 @@ export const Table: FC<TableProps> = ({
                                 }}
                             >
                                 {withAction && (
-                                    <td>
+                                    <td style={{width: '20px', border: '1px solid #dddddd'}}>
                                         <input
                                             checked={checkList.includes(item.id)}
                                             onChange={handleChangeCheckboxes(item.id)}
@@ -118,6 +118,7 @@ export const Table: FC<TableProps> = ({
                                             columnId={key}
                                             editable={editableColumns.includes(key)}
                                             key={key}
+                                            onChangeCell={onChangeCell}
                                             rowId={item.id}
                                         >
                                             {currentElem[key as keyof typeof currentElem]}

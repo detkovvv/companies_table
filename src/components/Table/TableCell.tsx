@@ -40,7 +40,10 @@ export const TableCell: FC<TableCellProps> = ({
         if (event.key === 'Enter') {
             event.preventDefault();
             console.log(onChangeCell);
-            // onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
+            console.log(rowId);
+            console.log(columnId);
+            console.log(event.currentTarget.value);
+            onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
             (inputRef.current as HTMLInputElement).blur();
             if (editable) setShowInput(!showInput);
         }
@@ -50,7 +53,7 @@ export const TableCell: FC<TableCellProps> = ({
 
 
     return (
-        <td onClick={handleClick}>
+        <td onClick={handleClick} style={{width:'200px', padding:'5px 10px', border: '1px solid #dddddd', textAlign:'left' }}>
             {showInput ? (
                 <input
                     onChange={handleChange}

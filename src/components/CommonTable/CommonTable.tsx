@@ -34,11 +34,11 @@ export const CommonTable = () => {
     if (isLoading) {
         return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
-    const onChangeCompaniesCell = (value: { rowId, columnId, value: event.curentTarget.value }) => {
-        dispatch(updateCompany(value));
+    const onChangeCompaniesCell = (obj: { rowId:string, columnId:string, value: event.curentTarget.value }) => {
+        dispatch(updateCompany(obj));
     };
-    const onChangeEmployeesCell = (value: { rowId, columnId, value: event.curentTarget.value }) => {
-        dispatch(updateCompany(value));
+    const onChangeEmployeesCell = (obj: { rowId:string, columnId:string, value: event.curentTarget.value }) => {
+        dispatch(updateCompany(obj));
     };
 
     return (
