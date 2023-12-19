@@ -32,6 +32,7 @@ export const employeesSlice = createSlice({
         },
         removeEmployee: (state, action: PayloadAction<string[]>) => {
             state.data = state.data.filter((employee) => !action.payload.includes(employee.id));
+            state.checked = [];
         },
         updateEmployee: (state, action: PayloadAction<OnChangeCellValue>) => {
             const { rowId, columnId, value } = action.payload;
@@ -46,9 +47,6 @@ export const employeesSlice = createSlice({
             });
         },
     },
-    // extraReducers(builder) {
-    //     builder.addCase();
-    // },
 });
 
 export const {

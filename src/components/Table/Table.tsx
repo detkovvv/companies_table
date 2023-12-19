@@ -58,10 +58,10 @@ export const Table: FC<TableProps> = ({
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
     const containerHeight = 600;
-    const itemHeight = 50;
+    // const itemHeight = 50;
 
     const { virtualItems, totalHeight } = useFixedSizeList({
-        itemHeight: itemHeight,
+        itemHeight: () => 40 + Math.round(10 * Math.random()),
         itemsCount: body.length,
         // listHeight: containerHeight,
         scrollElementRef: scrollElementRef,
@@ -94,7 +94,10 @@ export const Table: FC<TableProps> = ({
                                 <tr
                                     className={style.tbody_line}
                                     key={item.id}
-                                    style={{ transform: `translateY(${virtualItem.offsetTop}px)` }}
+                                    style={{
+                                        transform: `translateY(${virtualItem.offsetTop}px)`,
+                                        height: virtualItem.height,
+                                    }}
                                 >
                                     {withAction && (
                                         <td className={style.td_header}>

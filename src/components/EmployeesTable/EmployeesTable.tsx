@@ -10,6 +10,7 @@ import {
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { type OnChangeCellValue } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
+import { Loading } from '../Loading/Loading';
 import { Table } from '../Table/Table';
 
 export const EmployeesTable: FC = () => {

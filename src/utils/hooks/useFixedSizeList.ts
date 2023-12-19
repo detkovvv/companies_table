@@ -89,7 +89,7 @@ export const useFixedSizeList = (props: UseFixedSizeListProps) => {
         };
     }, []);
 
-    const { virtualItems, startIndex, endIndex, totalHeight } = useMemo(() => {
+    const { virtualItems, startIndex, endIndex, totalHeight, allItems } = useMemo(() => {
         const rangeStart = scrollTop;
         const rangeEnd = scrollTop + listHeight;
         let totalHeight = 0;
@@ -131,5 +131,6 @@ export const useFixedSizeList = (props: UseFixedSizeListProps) => {
         startIndex,
         endIndex,
         isScrolling,
+        allItems,
     };
 };
