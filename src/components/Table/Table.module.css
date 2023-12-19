@@ -1,4 +1,3 @@
-
 .table_container {
     height: 600px;
     overflow-x: hidden;
@@ -12,9 +11,7 @@
     padding: 10px;
     height: 100%;
     margin-bottom: 20px;
-
 }
-
 
 .thead {
     background: #efefef;
@@ -46,12 +43,10 @@
 }
 
 .tbody_line:nth-child(even) {
-    background: #F7F7F7;
+    background: #f7f7f7;
 }
-
 
 .td_header {
     width: 20px;
     border: 1px solid #dddddd;
 }
-

@@ -8,13 +8,14 @@ import React, {
 } from 'react';
 
 import style from './TabelCell.module.css';
+import { OnChangeCellValue } from '../../utils/types';
 
 type TableCellProps = {
     rowId: string;
     columnId: string;
     children: string;
     editable: boolean;
-    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
+    onChangeCell?: (value: OnChangeCellValue) => void;
 };
 
 export const TableCell: FC<TableCellProps> = ({

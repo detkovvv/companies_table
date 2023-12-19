@@ -5,7 +5,11 @@ import { useAppSelector } from '../../utils/hooks/reduxHooks';
 import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
-import { type CompanyFullType, type EmployeeFullType } from '../../utils/types';
+import {
+    type CompanyFullType,
+    type EmployeeFullType,
+    type OnChangeCellValue,
+} from '../../utils/types';
 import { TableCell } from '../TableCell/TableCell';
 
 type TableProps = (
@@ -31,7 +35,7 @@ type TableProps = (
     order: string[];
     editableColumns: string[];
     withAction?: boolean;
-    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
+    onChangeCell?: (value: OnChangeCellValue) => void;
 };
 
 export const Table: FC<TableProps> = ({
@@ -59,7 +63,7 @@ export const Table: FC<TableProps> = ({
     const { virtualItems, totalHeight } = useFixedSizeList({
         itemHeight: itemHeight,
         itemsCount: body.length,
-        listHeight: containerHeight,
+        // listHeight: containerHeight,
         scrollElementRef: scrollElementRef,
     });
 

@@ -2,24 +2,33 @@ import { type FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import style from './EmployeesTable.module.css';
-import { employeesFetching } from '../../store/reducers/EmployeesSlice';
+import {
+    employeesFetching,
+    removeEmployee,
+    updateEmployee,
+} from '../../store/reducers/EmployeesSlice';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
+import { type OnChangeCellValue } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
-import { Loading } from '../Loading/Loading';
 import { Table } from '../Table/Table';
 
-type EmployeesTableProps = {
-    handleRemoveEmployee: () => void;
-    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
-};
-
-export const EmployeesTable: FC<EmployeesTableProps> = ({ handleRemoveEmployee, onChangeCell }) => {
+export const EmployeesTable: FC = () => {
     const companiesData = useAppSelector((store) => store.companies.data);
+    const selectedCompanyId = useAppSelector((state) => state.companies.checked);
+
     const employeesData = useAppSelector((state) => state.employees.data);
     const isLoading = useAppSelector((state) => state.employees.isLoading);
     const selectedEmployeesId = useAppSelector((state) => state.employees.checked);
-    const selectedCompanyId = useAppSelector((state) => state.companies.checked);
+
     const dispatch = useDispatch();
+
+    const handleRemoveEmployee = () => {
+        dispatch(removeEmployee(selectedEmployeesId));
+    };
+
+    const onChangeEmployeesCell = (value: OnChangeCellValue) => {
+        dispatch(updateEmployee(value));
+    };
 
     const head = {
         surname: 'Фамилия',
@@ -34,27 +43,26 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ handleRemoveEmployee, 
         if (currentCompany) dispatch(employeesFetching(currentCompany.employees));
     }, [selectedCompanyId]);
 
-    if (isLoading) return null;
+    if (isLoading) return <Loading />;
+    if (employeesData.length === 0) return null;
 
     return (
-        selectedCompanyId.length === 1 && (
-            <div className={style.employees_table_container}>
-                <EmployeeForm />
-                <Table
-                    body={employeesData}
-                    editableColumns={editableColumns}
-                    head={head}
-                    onChangeCell={onChangeCell}
-                    order={order}
-                    tableName={'employees'}
-                    withAction
-                />
-                {!!selectedEmployeesId.length && (
-                    <button onClick={handleRemoveEmployee}>
-                        Удалить: ({selectedEmployeesId.length}) сотрудника(ов)
-                    </button>
-                )}
-            </div>
-        )
+        <div className={style.employees_table_container}>
+            <EmployeeForm />
+            <Table
+                body={employeesData}
+                editableColumns={editableColumns}
+                head={head}
+                onChangeCell={onChangeEmployeesCell}
+                order={order}
+                tableName={'employees'}
+                withAction
+            />
+            {!!selectedEmployeesId.length && (
+                <button onClick={handleRemoveEmployee}>
+                    Удалить: ({selectedEmployeesId.length}) сотрудника(ов)
+                </button>
+            )}
+        </div>
     );
 };

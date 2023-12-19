@@ -1,6 +1,6 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
-import { type EmployeeFullType } from '../../utils/types';
+import { type EmployeeFullType, type OnChangeCellValue } from '../../utils/types';
 
 export type EmployeeStoreType = {
     data: EmployeeFullType[];
@@ -12,7 +12,7 @@ export type EmployeeStoreType = {
 export const initialState: EmployeeStoreType = {
     data: [],
     checked: [],
-    isLoading: true,
+    isLoading: false,
     error: '',
 };
 export const employeesSlice = createSlice({
@@ -33,7 +33,7 @@ export const employeesSlice = createSlice({
         removeEmployee: (state, action: PayloadAction<string[]>) => {
             state.data = state.data.filter((employee) => !action.payload.includes(employee.id));
         },
-        updateEmployee: (state, action: PayloadAction<{ rowId: string, columnId: 'surname' | 'name' | 'position', value: string | number }>) => {
+        updateEmployee: (state, action: PayloadAction<OnChangeCellValue>) => {
             const { rowId, columnId, value } = action.payload;
             state.data = state.data.map((employee) => {
                 if (employee && employee.id === rowId) {
@@ -46,7 +46,15 @@ export const employeesSlice = createSlice({
             });
         },
     },
+    // extraReducers(builder) {
+    //     builder.addCase();
+    // },
 });
 
-export const { employeesFetching, setCheckedEmployee, addEmployee, removeEmployee, updateEmployee } =
-    employeesSlice.actions;
+export const {
+    employeesFetching,
+    setCheckedEmployee,
+    addEmployee,
+    removeEmployee,
+    updateEmployee,
+} = employeesSlice.actions;

@@ -23,3 +23,9 @@ export type CompanyFullType = {
     staff: number;
     id: string;
 };
+
+export type OnChangeCellValue = {
+    rowId: string;
+    columnId: string;
+    value: string | number;
+};

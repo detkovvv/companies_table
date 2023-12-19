@@ -1,5 +1,4 @@
-
-.company_table_container{
+.company_table_container {
     display: flex;
     flex-direction: column;
 }
