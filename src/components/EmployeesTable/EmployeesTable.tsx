@@ -32,11 +32,9 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({ handleRemoveEmployee, 
     useEffect(() => {
         const currentCompany = companiesData.find((company) => company.id === selectedCompanyId[0]);
         if (currentCompany) dispatch(employeesFetching(currentCompany.employees));
-    }, []);
+    }, [selectedCompanyId]);
 
-    if (selectedCompanyId.length !== 1 && isLoading) {
-        return <Loading />;
-    }
+    if (isLoading) return null;
 
     return (
         selectedCompanyId.length === 1 && (
