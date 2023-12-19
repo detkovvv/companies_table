@@ -44,8 +44,8 @@ export const EmployeesTable: FC = () => {
         if (currentCompany) dispatch(employeesFetching(currentCompany.employees));
     }, [selectedCompanyId]);
 
+    if (selectedCompanyId.length !== 1) return null;
     if (isLoading) return <Loading />;
-    if (employeesData.length === 0) return null;
 
     return (
         <div className={style.employees_table_container}>

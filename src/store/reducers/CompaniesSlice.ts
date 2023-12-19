@@ -67,6 +67,7 @@ export const companiesSlice = createSlice({
             const companyIndex = state.data.findIndex((company) => company.id === companyId);
             if (companyIndex !== -1) {
                 state.data[companyIndex].employees.push(newEmployee);
+                state.data[companyIndex].staff = state.data[companyIndex].employees.length;
             }
         });
 
@@ -76,6 +77,7 @@ export const companiesSlice = createSlice({
                 company.employees = company.employees.filter(
                     (employee) => !removedEmployeeIds.includes(employee.id),
                 );
+                company.staff = company.employees.length;
             });
         });
 
