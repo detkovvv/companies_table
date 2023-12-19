@@ -71,6 +71,7 @@ export const Table: FC<TableProps> = ({
                 overflowX: 'hidden',
                 overflowY: 'auto',
                 border: '1px solid lightgrey',
+                marginBottom: '10px'
             }}
         >
             <div style={{ height: totalHeight }}>
@@ -100,6 +101,7 @@ export const Table: FC<TableProps> = ({
                                     position: 'absolute',
                                     top: 0,
                                     transform: `translateY(${virtualItem.offsetTop}px)`,
+                                    alignItems: 'center',
                                 }}
                             >
                                 {withAction && (

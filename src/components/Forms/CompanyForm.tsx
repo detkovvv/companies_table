@@ -40,8 +40,8 @@ export const CompanyForm: FC = () => {
                 type='text'
                 value={address}
             />
-            <button style={{ fontSize: '12px' }} type='submit'>
-                добавить компанию
+            <button type='submit'>
+                добавить
             </button>
         </form>
     );

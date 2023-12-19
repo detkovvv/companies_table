@@ -49,7 +49,7 @@ export const EmployeeForm: FC = () => {
                 value={position}
             />
             <button style={{ fontSize: '12px' }} type='submit'>
-                добавить сотрудника
+                добавить
             </button>
         </form>
     );
