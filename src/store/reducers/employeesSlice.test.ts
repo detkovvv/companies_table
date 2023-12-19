@@ -1,4 +1,3 @@
-
 import { test, expect } from 'vitest';
 
 import { employeesSlice } from './EmployeesSlice';
@@ -51,5 +50,21 @@ test('removeEmployee should update state correctly', () => {
 
     expect(newState.data).deep.equal([
         { id: '2', name: 'Vasya', surname: 'Vasin', position: 'counter' },
+    ]);
+});
+test('updateCompany should update state correctly', () => {
+    const initialState = {
+        ...INITIAL_STATE,
+        data: [USER, { ...USER, id: '2', name: 'Vasya' }],
+    };
+    const actionPayload = { rowId: '1', columnId: 'name', value: 'Petya' };
+
+    const newState = employeesSlice.reducer(
+        initialState,
+        employeesSlice.actions.updateEmployee(actionPayload),
+    );
+
+    expect(newState.data).deep.equal([
+        { id: '1', name: 'Petya', surname: 'Johnson', position: 'manager' },
     ]);
 });

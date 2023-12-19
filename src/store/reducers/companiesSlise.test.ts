@@ -1,9 +1,6 @@
-
 import { test, expect } from 'vitest';
 
 import { companiesSlice } from './CompaniesSlice';
-
-
 
 const COMPANY = {
     id: '11',
@@ -34,7 +31,15 @@ const COMPANY = {
 
 const INITIAL_STATE = { data: [], isLoading: true, error: '', checked: [] };
 
-test('employeesFetching should update state correctly', () => {
+test('companiesFetching should update state correctly', () => {
+    const newState = companiesSlice.reducer(
+        INITIAL_STATE,
+        companiesSlice.actions.companiesFetching(),
+    );
+    expect(newState.isLoading).toBe(true);
+});
+
+test('companiesFetchingSuccess should update state correctly', () => {
     const actionPayload = [COMPANY];
 
     const newState = companiesSlice.reducer(
@@ -47,7 +52,19 @@ test('employeesFetching should update state correctly', () => {
     expect(newState.error).equal('');
 });
 
-test('setCheckedEmployee should update state correctly', () => {
+test('companiesFetchingError should update state correctly', () => {
+    const actionPayload = Error;
+
+    const newState = companiesSlice.reducer(
+        INITIAL_STATE,
+        companiesSlice.actions.companiesFetchingError(Error),
+    );
+
+    expect(newState.isLoading).toBe(false);
+    expect(newState.error).equal(actionPayload);
+});
+
+test('setCheckedCompany should update state correctly', () => {
     const actionPayload = ['11', '2', '3'];
 
     const newState = companiesSlice.reducer(
@@ -57,7 +74,7 @@ test('setCheckedEmployee should update state correctly', () => {
     expect(newState.checked).deep.equal(actionPayload);
 });
 
-test('addEmployee should update state correctly', () => {
+test('addCompany should update state correctly', () => {
     const newState = companiesSlice.reducer(
         INITIAL_STATE,
         companiesSlice.actions.addCompany(COMPANY),
@@ -65,7 +82,7 @@ test('addEmployee should update state correctly', () => {
     expect(newState.data).deep.equal([COMPANY]);
 });
 
-test('removeEmployee should update state correctly', () => {
+test('removeCompany should update state correctly', () => {
     const initialState = {
         ...INITIAL_STATE,
         data: [COMPANY, { ...COMPANY, id: '2', name: 'Toyota' }],
@@ -77,7 +94,20 @@ test('removeEmployee should update state correctly', () => {
         companiesSlice.actions.removeCompany(actionPayload),
     );
 
-    expect(newState.data).deep.equal([
-        { id: '2', name: 'Toyota', address: 'Stasova' },
-    ]);
+    expect(newState.data).deep.equal([{ id: '2', name: 'Toyota', address: 'Stasova' }]);
+});
+
+test('updateCompany should update state correctly', () => {
+    const initialState = {
+        ...INITIAL_STATE,
+        data: [COMPANY, { ...COMPANY, id: '2', name: 'Toyota' }],
+    };
+    const actionPayload = ['11'];
+
+    const newState = companiesSlice.reducer(
+        initialState,
+        companiesSlice.actions.removeCompany(actionPayload),
+    );
+
+    expect(newState.data).deep.equal([{ id: '2', name: 'Toyota', address: 'Stasova' }]);
 });
