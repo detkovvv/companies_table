@@ -1,7 +1,57 @@
 
-.table_container{
-    height: 50px;
+.table_container {
+    height: 600px;
     overflow-x: hidden;
     overflow-y: auto;
     border: 1px solid lightgray;
 }
+
+.table {
+    border: 2px solid #eee;
+    width: 100%;
+    padding: 10px;
+    height: 100%;
+    margin-bottom: 20px;
+
+}
+
+
+.thead {
+    background: #efefef;
+}
+
+.th_checkbox {
+    width: 20px;
+}
+
+.th_header {
+    width: 200px;
+    padding: 5px;
+    border: 1px solid #dddddd;
+}
+
+.tbody {
+    position: relative;
+}
+
+.tbody_line {
+    height: 50px;
+    position: absolute;
+    top: 0;
+    align-items: center;
+}
+
+.tbody_line:nth-child(odd) {
+    background: #fff;
+}
+
+.tbody_line:nth-child(even) {
+    background: #F7F7F7;
+}
+
+
+.td_header {
+    width: 20px;
+    border: 1px solid #dddddd;
+}
+

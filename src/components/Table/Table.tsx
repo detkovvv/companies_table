@@ -66,10 +66,10 @@ export const Table: FC<TableProps> = ({
     return (
         <div className={style.table_container} ref={scrollElementRef}>
             <div style={{ height: totalHeight }}>
-                <table style={{ width: '100%', marginBottom: '20px' }}>
-                    <thead style={{ background: '#efefef' }}>
+                <table className={style.table}>
+                    <thead className={style.thead}>
                         {withAction && (
-                            <th style={{ width: '20px' }}>
+                            <th className={style.th_checkbox}>
                                 <input
                                     onChange={handleChangeMainCheckbox}
                                     ref={mainCheckboxRef}
@@ -78,34 +78,22 @@ export const Table: FC<TableProps> = ({
                             </th>
                         )}
                         {sortedHead.map((i) => (
-                            <th
-                                key={i.key}
-                                style={{
-                                    width: '200px',
-                                    padding: '5px',
-                                    border: '1px solid #dddddd',
-                                }}
-                            >
+                            <th className={style.th_header} key={i.key}>
                                 {i.title}
                             </th>
                         ))}
                     </thead>
-                    <tbody style={{ position: 'relative' }}>
+                    <tbody className={style.tbody}>
                         {virtualItems.map((virtualItem, ind) => {
                             const item = body[virtualItem.index]!;
                             return (
                                 <tr
+                                    className={style.tbody_line}
                                     key={item.id}
-                                    style={{
-                                        height: itemHeight,
-                                        position: 'absolute',
-                                        top: 0,
-                                        transform: `translateY(${virtualItem.offsetTop}px)`,
-                                        alignItems: 'center',
-                                    }}
+                                    style={{ transform: `translateY(${virtualItem.offsetTop}px)` }}
                                 >
                                     {withAction && (
-                                        <td style={{ width: '20px', border: '1px solid #dddddd' }}>
+                                        <td className={style.td_header}>
                                             <input
                                                 checked={checkList.includes(item.id)}
                                                 onChange={handleChangeCheckboxes(item.id)}

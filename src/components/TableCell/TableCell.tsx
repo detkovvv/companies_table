@@ -7,6 +7,7 @@ import React, {
     useState,
 } from 'react';
 
+import style from './TabelCell.module.css';
 
 type TableCellProps = {
     rowId: string;
@@ -17,13 +18,12 @@ type TableCellProps = {
 };
 
 export const TableCell: FC<TableCellProps> = ({
-                                                  children,
-                                                  editable,
-                                                  rowId,
-                                                  columnId,
-                                                  onChangeCell
-                                              }) => {
-
+    children,
+    editable,
+    rowId,
+    columnId,
+    onChangeCell,
+}) => {
     const [showInput, setShowInput] = useState(false);
     const [inputState, setInputState] = useState(children);
     const inputRef = useRef<HTMLInputElement>(null);
@@ -39,10 +39,6 @@ export const TableCell: FC<TableCellProps> = ({
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            console.log(onChangeCell);
-            console.log(rowId);
-            console.log(columnId);
-            console.log(event.currentTarget.value);
             onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
             (inputRef.current as HTMLInputElement).blur();
             if (editable) setShowInput(!showInput);
@@ -51,9 +47,8 @@ export const TableCell: FC<TableCellProps> = ({
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => setInputState(e.currentTarget.value);
 
-
     return (
-        <td onClick={handleClick} style={{width:'200px', padding:'5px 10px', border: '1px solid #dddddd', textAlign:'left' }}>
+        <td className={style.td_body} onClick={handleClick}>
             {showInput ? (
                 <input
                     onChange={handleChange}

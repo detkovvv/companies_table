@@ -11,7 +11,7 @@ export const App = () => {
         <ErrorBoundary
             FallbackComponent={FallbackComponent}
             onReset={() => {
-                // reset the state of your app here
+                location.reload();
             }}
             resetKeys={['someKey']}
         >
