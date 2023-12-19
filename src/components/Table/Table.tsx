@@ -2,7 +2,7 @@ import { type FC, useRef } from 'react';
 
 import style from './Table.module.css';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
-import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
+import { useSizeList } from '../../utils/hooks/useSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
 import {
@@ -60,7 +60,7 @@ export const Table: FC<TableProps> = ({
     const containerHeight = 600;
     // const itemHeight = 50;
 
-    const { virtualItems, totalHeight } = useFixedSizeList({
+    const { virtualItems, totalHeight } = useSizeList({
         itemHeight: () => 40 + Math.round(10 * Math.random()),
         itemsCount: body.length,
         // listHeight: containerHeight,

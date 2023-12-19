@@ -12,7 +12,7 @@ interface UseFixedSizeListProps {
 const DEFAULT_OVERSCAN = 3;
 const DEFAULT_SCROLLING_DELAY = 150;
 
-export const useFixedSizeList = (props: UseFixedSizeListProps) => {
+export const useSizeList = (props: UseFixedSizeListProps) => {
     const {
         itemHeight,
         itemsCount,
