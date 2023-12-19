@@ -7,14 +7,12 @@ import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Table } from '../Table/Table';
 
 type EmployeesTableProps = {
-    companyList: string[];
-    onChoose: (value: string[]) => void;
+    selectedCompanyId: string[];
     onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
-                                                            companyList,
-                                                            onChoose,
+                                                            selectedCompanyId,
                                                             onChangeCell
                                                         }) => {
     const companiesData = useAppSelector((store) => store.companies.data);
@@ -31,7 +29,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     const editableColumns = ['surname', 'name', 'position'];
 
     useEffect(()=>{
-        const currentCompany = companiesData.find(company => company.id === companyList[0]);
+        const currentCompany = companiesData.find(company => company.id === selectedCompanyId[0]);
         if(currentCompany) dispatch(employeesFetching(currentCompany.employees));
     },[])
 
@@ -47,7 +45,6 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 editableColumns={editableColumns}
                 head={head}
                 onChangeCell={onChangeCell}
-                onChoose={onChoose}
                 order={order}
                 tableName={'employees'}
                 withAction

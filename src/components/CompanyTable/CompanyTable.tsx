@@ -5,11 +5,9 @@ import { CompanyForm } from '../Forms/CompanyForm';
 import { Table } from '../Table/Table';
 
 export const CompanyTable: FC<{
-    onChoose: (value: string[]) => void,
     data: CompanyFullType[],
     onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 }> = ({
-          onChoose,
           data,
           onChangeCell,
       }) => {
@@ -31,7 +29,6 @@ export const CompanyTable: FC<{
                 editableColumns={editableColumns}
                 head={head}
                 onChangeCell={onChangeCell}
-                onChoose={onChoose}
                 order={order}
                 tableName={'companies'}
                 withAction

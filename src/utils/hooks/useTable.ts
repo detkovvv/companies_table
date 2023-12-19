@@ -9,18 +9,15 @@ import { type CompanyFullType, type EmployeeFullType } from '../types';
 export const useTable = (
     body: CompanyFullType[] | EmployeeFullType[],
     tableName: 'companies' | 'employees',
-    handleChange: ((value: string[]) => void) | undefined,
 ) => {
-    const checkList: string[] = useAppSelector(state => state[tableName].checked);
+    const checkList: string[] = useAppSelector((state) => state[tableName].checked);
     const dispatch = useAppDispatch();
 
-    const { mainCheckboxRef, setChecked, setIndeterminate, setUnchecked } =
-        useMainCheckbox();
+    const { mainCheckboxRef, setChecked, setIndeterminate, setUnchecked } = useMainCheckbox();
 
     const handleChangeCheckList = (value: string[]) => {
         if (tableName === 'companies') dispatch(setCheckedCompany(value));
         if (tableName === 'employees') dispatch(setCheckedEmployee(value));
-        handleChange?.(value);
     };
 
     useEffect(() => {

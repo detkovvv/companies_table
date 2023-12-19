@@ -41,14 +41,13 @@ export const Table: FC<TableProps> = ({
                                           tableName,
                                           withAction = false,
                                           editableColumns,
-                                          onChoose,
                                           onChangeCell
 
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });
 
     const { mainCheckboxRef, handleChangeMainCheckbox, handleChangeCheckboxes } =
-        useTable(body, tableName, onChoose);
+        useTable(body, tableName);
 
     const checkList: string[] = useAppSelector(state => state[tableName].checked);
 
