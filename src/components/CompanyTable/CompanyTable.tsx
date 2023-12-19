@@ -11,6 +11,7 @@ export const CompanyTable: FC<{
 }> = ({
           onChoose,
           data,
+                                     onChangeCell
       }) => {
 
     const order = ['name', 'staff', 'address'];
@@ -29,6 +30,7 @@ export const CompanyTable: FC<{
                 body={data}
                 editableColumns={editableColumns}
                 head={head}
+                onChangeCell={onChangeCell}
                 onChoose={onChoose}
                 order={order}
                 tableName={'companies'}

@@ -31,6 +31,7 @@ type TableProps = (
     editableColumns: string[];
     withAction?: boolean;
     onChoose?: (value: string[]) => void;
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const Table: FC<TableProps> = ({
@@ -41,6 +42,7 @@ export const Table: FC<TableProps> = ({
                                           withAction = false,
                                           editableColumns,
                                           onChoose,
+                                          onChangeCell
 
                                       }) => {
     const sortedHead = getHeaderFromObject({ order, head });

@@ -34,12 +34,12 @@ export const CommonTable = () => {
     if (isLoading) {
         return <div style={{ display: 'flex' }}>...isLoading</div>;
     }
-    const onChangeCompaniesCell =(obj)=>{
-        dispatch(updateCompany(obj))
-    }
-    const onChangeEmployeesCell =(obj)=>{
-        dispatch(updateCompany(obj))
-    }
+    const onChangeCompaniesCell = (value: { rowId, columnId, value: event.curentTarget.value }) => {
+        dispatch(updateCompany(value));
+    };
+    const onChangeEmployeesCell = (value: { rowId, columnId, value: event.curentTarget.value }) => {
+        dispatch(updateCompany(value));
+    };
 
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
@@ -49,7 +49,11 @@ export const CommonTable = () => {
                         Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
-                <CompanyTable data={companiesData} onChangeCompaniesCell={onChangeCompaniesCell} onChoose={onChooseCompany} />
+                <CompanyTable
+                    data={companiesData}
+                    onChangeCell={onChangeCompaniesCell}
+                    onChoose={onChooseCompany}
+                />
             </div>
             <div>
                 {!!employeeList.length && (
@@ -57,11 +61,13 @@ export const CommonTable = () => {
                         Удалить: ({employeeList.length}) сотрудника(ов)
                     </button>
                 )}
-                {companyList.length === 1 && (<EmployeesTable
-                    companyList={companyList}
-                    data={companiesData}
-                    onChoose={onChooseEmployee}
-                />)}
+                {companyList.length === 1 && (
+                    <EmployeesTable
+                        companyList={companyList}
+                        onChangeCell={onChangeEmployeesCell}
+                        onChoose={onChooseEmployee}
+                    />
+                )}
             </div>
         </div>
     );

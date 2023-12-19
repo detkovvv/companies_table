@@ -13,6 +13,7 @@ type TableCellProps = {
     columnId: string;
     children: string;
     editable: boolean;
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const TableCell: FC<TableCellProps> = ({
@@ -20,6 +21,7 @@ export const TableCell: FC<TableCellProps> = ({
                                                   editable,
                                                   rowId,
                                                   columnId,
+                                                  onChangeCell
                                               }) => {
 
     const [showInput, setShowInput] = useState(false);
@@ -37,7 +39,8 @@ export const TableCell: FC<TableCellProps> = ({
     const handleKeyDown: KeyboardEventHandler<HTMLInputElement> = (event) => {
         if (event.key === 'Enter') {
             event.preventDefault();
-            onChangeCompaniesCell?.({ rowId, columnId, value: event.currentTarget.value });
+            console.log(onChangeCell);
+            // onChangeCell?.({ rowId, columnId, value: event.currentTarget.value });
             (inputRef.current as HTMLInputElement).blur();
             if (editable) setShowInput(!showInput);
         }

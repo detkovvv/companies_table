@@ -3,19 +3,19 @@ import { useDispatch } from 'react-redux';
 
 import { employeesFetching } from '../../store/reducers/EmployeesSlice';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
-import { type CompanyFullType } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Table } from '../Table/Table';
 
 type EmployeesTableProps = {
     companyList: string[];
-    data: CompanyFullType[];
     onChoose: (value: string[]) => void;
+    onChangeCell?: (value: { rowId: string; columnId: string; value: string | number }) => void;
 };
 
 export const EmployeesTable: FC<EmployeesTableProps> = ({
                                                             companyList,
                                                             onChoose,
+                                                            onChangeCell
                                                         }) => {
     const companiesData = useAppSelector((store) => store.companies.data);
     const employeesData = useAppSelector(state => state.employees.data);
@@ -33,7 +33,6 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
     useEffect(()=>{
         const currentCompany = companiesData.find(company => company.id === companyList[0]);
         if(currentCompany) dispatch(employeesFetching(currentCompany.employees));
-        console.log(currentCompany);
     },[])
 
     if (isLoading) {
@@ -47,6 +46,7 @@ export const EmployeesTable: FC<EmployeesTableProps> = ({
                 body={employeesData}
                 editableColumns={editableColumns}
                 head={head}
+                onChangeCell={onChangeCell}
                 onChoose={onChoose}
                 order={order}
                 tableName={'employees'}
