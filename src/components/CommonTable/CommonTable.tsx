@@ -44,30 +44,33 @@ export const CommonTable = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'flex-start', alignItems: 'start' }}>
             <div>
-                {!!companyList.length && (
-                    <button onClick={handleRemoveCompany}>
-                        Удалить: ({companyList.length}) компанию(и)
-                    </button>
-                )}
                 <CompanyTable
                     data={companiesData}
                     onChangeCell={onChangeCompaniesCell}
                     onChoose={onChooseCompany}
                 />
-            </div>
-            <div>
-                {!!employeeList.length && (
-                    <button onClick={handleRemoveEmployee}>
-                        Удалить: ({employeeList.length}) сотрудника(ов)
+                {!!companyList.length && (
+                    <button onClick={handleRemoveCompany}>
+                        Удалить: ({companyList.length}) компанию(и)
                     </button>
                 )}
+            </div>
+            <div>
                 {companyList.length === 1 && (
-                    <EmployeesTable
-                        companyList={companyList}
-                        onChangeCell={onChangeEmployeesCell}
-                        onChoose={onChooseEmployee}
-                    />
+                   <div>
+                       <EmployeesTable
+                           companyList={companyList}
+                           onChangeCell={onChangeEmployeesCell}
+                           onChoose={onChooseEmployee}
+                       />
+                       {!!employeeList.length && (
+                           <button onClick={handleRemoveEmployee}>
+                               Удалить: ({employeeList.length}) сотрудника(ов)
+                           </button>
+                       )}
+                   </div>
                 )}
+
             </div>
         </div>
     );
