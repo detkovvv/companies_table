@@ -59,7 +59,6 @@ export const Table: FC<TableProps> = ({
     const rowHeight = 50;
     const visibleRows = 11;
     const [start, setStart] = useState(0);
-    const [visibleData, setVisibleData] = useState<CompanyFullType[] | EmployeeFullType[]>([]);
 
     const getTopHeight = () => {
         return rowHeight * start;
@@ -70,11 +69,11 @@ export const Table: FC<TableProps> = ({
 
     useEffect(() => {
         const scrollHandler = (e) => {
-            console.log(e.target.scrollTop);
-            setStart(
-                Math.min(body.length - visibleRows - 1, Math.floor(e.target.scrollTop / rowHeight)),
+            const newStart = Math.min(
+                body.length - visibleRows - 1,
+                Math.floor(e.target.scrollTop / rowHeight),
             );
-            setVisibleData(body.slice(start, start + visibleRows));
+            setStart(newStart);
         };
         if (!scrollElementRef.current) return;
         scrollElementRef.current.addEventListener('scroll', scrollHandler);
@@ -111,7 +110,7 @@ export const Table: FC<TableProps> = ({
                     </tr>
                 </thead>
                 <tbody className={style.tbody}>
-                    {visibleData.map((item, ind) => {
+                    {body.slice(start, start + visibleRows).map((item, ind) => {
                         return (
                             <tr
                                 className={style.tbody_line}
