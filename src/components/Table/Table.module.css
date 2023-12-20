@@ -34,14 +34,7 @@
     position: absolute;
     top: 0;
     align-items: center;
-}
-
-.tbody_line:nth-child(odd) {
-    background: #fff;
-}
-
-.tbody_line:nth-child(even) {
-    background: #f7f7f7;
+    height: 50px;
 }
 
 .td_header {

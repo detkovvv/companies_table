@@ -1,8 +1,8 @@
-import { type FC, useRef } from 'react';
+import { type FC, useCallback, useRef } from 'react';
 
 import style from './Table.module.css';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
-import { useFixedSizeList } from '../../utils/hooks/useFixedSizeList';
+import { useDynamicSizeList } from '../../utils/hooks/useDynamicSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
 import {
@@ -49,14 +49,13 @@ export const Table: FC<TableProps> = ({
     const checkList: string[] = useAppSelector((state) => state[tableName].checked);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
-    const containerHeight = 600;
     const itemHeight = 50;
 
-    const { virtualItems, totalHeight } = useFixedSizeList({
-        itemHeight: itemHeight,
+    const { virtualItems, totalHeight } = useDynamicSizeList({
+        itemHeight: useCallback(() => itemHeight, []),
         itemsCount: body.length,
-        listHeight: containerHeight,
-        scrollElementRef: scrollElementRef,
+        getScrollElement: useCallback(() => scrollElementRef.current as unknown as HTMLElement, []),
+        getItemKey: useCallback((index) => body[index]!.id, [body]),
     });
 
     return (
@@ -82,13 +81,17 @@ export const Table: FC<TableProps> = ({
                         </tr>
                     </thead>
                     <tbody className={style.tbody}>
-                        {virtualItems.map((virtualItem, ind) => {
+                        {virtualItems.map((virtualItem) => {
                             const item = body[virtualItem.index]!;
                             return (
                                 <tr
                                     className={style.tbody_line}
                                     key={item.id}
-                                    style={{ transform: `translateY(${virtualItem.offsetTop}px)` }}
+                                    style={{
+                                        transform: `translateY(${virtualItem.offsetTop}px)`,
+                                        background:
+                                            virtualItem.index % 2 === 0 ? '#fff' : '#f7f7f7',
+                                    }}
                                 >
                                     {withAction && (
                                         <td className={style.td_header}>
@@ -100,7 +103,7 @@ export const Table: FC<TableProps> = ({
                                         </td>
                                     )}
                                     {order.map((key) => {
-                                        const currentElem = body[ind];
+                                        const currentElem = body[virtualItem.index];
                                         return (
                                             <TableCell
                                                 columnId={key}
