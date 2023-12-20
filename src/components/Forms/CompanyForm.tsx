@@ -40,9 +40,7 @@ export const CompanyForm: FC = () => {
                 type='text'
                 value={address}
             />
-            <button type='submit'>
-                добавить
-            </button>
+            <button type='submit'>добавить</button>
         </form>
     );
 };

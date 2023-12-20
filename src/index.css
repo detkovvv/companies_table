@@ -25,7 +25,9 @@ button {
     color: #fff;
     cursor: pointer;
     outline: none;
-    transition: background 0.3s ease, color 0.3s ease;
+    transition:
+        background 0.3s ease,
+        color 0.3s ease;
 }
 
 button:hover {
