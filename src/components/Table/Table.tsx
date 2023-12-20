@@ -58,12 +58,12 @@ export const Table: FC<TableProps> = ({
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
     const containerHeight = 600;
-    // const itemHeight = 50;
+    const itemHeight = 50;
 
     const { virtualItems, totalHeight } = useFixedSizeList({
-        itemHeight: () => 40 + Math.round(10 * Math.random()),
+        itemHeight: itemHeight,
         itemsCount: body.length,
-        // listHeight: containerHeight,
+        listHeight: containerHeight,
         scrollElementRef: scrollElementRef,
     });
 
@@ -72,20 +72,22 @@ export const Table: FC<TableProps> = ({
             <div style={{ height: totalHeight }}>
                 <table className={style.table}>
                     <thead className={style.thead}>
-                        {withAction && (
-                            <th className={style.th_checkbox}>
-                                <input
-                                    onChange={handleChangeMainCheckbox}
-                                    ref={mainCheckboxRef}
-                                    type='checkbox'
-                                />
-                            </th>
-                        )}
-                        {sortedHead.map((i) => (
-                            <th className={style.th_header} key={i.key}>
-                                {i.title}
-                            </th>
-                        ))}
+                        <tr>
+                            {withAction && (
+                                <th className={style.th_checkbox}>
+                                    <input
+                                        onChange={handleChangeMainCheckbox}
+                                        ref={mainCheckboxRef}
+                                        type='checkbox'
+                                    />
+                                </th>
+                            )}
+                            {sortedHead.map((i) => (
+                                <th className={style.th_header} key={i.key}>
+                                    {i.title}
+                                </th>
+                            ))}
+                        </tr>
                     </thead>
                     <tbody className={style.tbody}>
                         {virtualItems.map((virtualItem, ind) => {
@@ -94,10 +96,7 @@ export const Table: FC<TableProps> = ({
                                 <tr
                                     className={style.tbody_line}
                                     key={item.id}
-                                    style={{
-                                        transform: `translateY(${virtualItem.offsetTop}px)`,
-                                        height: virtualItem.height,
-                                    }}
+                                    style={{ transform: `translateY(${virtualItem.offsetTop}px)` }}
                                 >
                                     {withAction && (
                                         <td className={style.td_header}>
