@@ -1,6 +1,6 @@
 import { type CompanyType, type EmployeeType } from './types';
 
-const mockEmployees: EmployeeType[] = Array.from({ length: 333 }, () => [
+const mockEmployeesData: EmployeeType[] = Array.from({ length: 333 }, () => [
     {
         surname: 'Сидоров',
         name: 'Александр',
@@ -18,22 +18,22 @@ const mockEmployees: EmployeeType[] = Array.from({ length: 333 }, () => [
     },
 ]).flat();
 
-const mockCompany: CompanyType[] = Array.from({ length: 20 }, () => [
+const mockCompaniesData: CompanyType[] = Array.from({ length: 20 }, () => [
     {
         name: 'Аэрофлот',
         address: 'г. Москва, ул. Ленина, д. 111',
-        employees: mockEmployees,
+        employees: mockEmployeesData,
     },
     {
         name: 'Северсталь',
         address: 'г. Москва, ул. Ленина, д. 111',
-        employees: mockEmployees,
+        employees: mockEmployeesData,
     },
     {
         name: 'Газпром',
         address: 'г. Москва, ул. Ленина, д. 111',
-        employees: mockEmployees,
+        employees: mockEmployeesData,
     },
 ]).flat();
 
-export const companiesList = mockCompany;
+export const companiesList = mockCompaniesData;
