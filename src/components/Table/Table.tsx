@@ -1,8 +1,7 @@
-import { type FC, useRef } from 'react';
+import { type FC, useEffect, useRef, useState } from 'react';
 
 import style from './Table.module.css';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
-import { useSizeList } from '../../utils/hooks/useSizeList';
 import { useTable } from '../../utils/hooks/useTable';
 import { getHeaderFromObject } from '../../utils/tableHelpers';
 import {
@@ -57,21 +56,44 @@ export const Table: FC<TableProps> = ({
     const checkList: string[] = useAppSelector((state) => state[tableName].checked);
 
     const scrollElementRef = useRef<HTMLDivElement>(null);
-    const containerHeight = 600;
-    // const itemHeight = 50;
+    const rowHeight = 50;
+    const visibleRows = 11;
+    const [start, setStart] = useState(0);
+    const [visibleData, setVisibleData] = useState<CompanyFullType[] | EmployeeFullType[]>([]);
 
-    const { virtualItems, totalHeight } = useSizeList({
-        itemHeight: () => 40 + Math.round(10 * Math.random()),
-        itemsCount: body.length,
-        // listHeight: containerHeight,
-        scrollElementRef: scrollElementRef,
-    });
+    const getTopHeight = () => {
+        return rowHeight * start;
+    };
+    const getBottomHeight = () => {
+        return rowHeight * (body.length - (start + visibleRows + 1));
+    };
+
+    useEffect(() => {
+        const scrollHandler = (e) => {
+            console.log(e.target.scrollTop);
+            setStart(
+                Math.min(body.length - visibleRows - 1, Math.floor(e.target.scrollTop / rowHeight)),
+            );
+            setVisibleData(body.slice(start, start + visibleRows));
+        };
+        if (!scrollElementRef.current) return;
+        scrollElementRef.current.addEventListener('scroll', scrollHandler);
+        return () => {
+            if (!scrollElementRef.current) return;
+            scrollElementRef.current.removeEventListener('scroll', scrollHandler);
+        };
+    }, [body.length, visibleRows, rowHeight]);
 
     return (
-        <div className={style.table_container} ref={scrollElementRef}>
-            <div style={{ height: totalHeight }}>
-                <table className={style.table}>
-                    <thead className={style.thead}>
+        <div
+            className={style.table_container}
+            ref={scrollElementRef}
+            style={{ height: rowHeight * visibleRows + 1 }}
+        >
+            <div style={{ height: getTopHeight() }} />
+            <table className={style.table}>
+                <thead className={style.thead}>
+                    <tr style={{ height: rowHeight }}>
                         {withAction && (
                             <th className={style.th_checkbox}>
                                 <input
@@ -86,48 +108,45 @@ export const Table: FC<TableProps> = ({
                                 {i.title}
                             </th>
                         ))}
-                    </thead>
-                    <tbody className={style.tbody}>
-                        {virtualItems.map((virtualItem, ind) => {
-                            const item = body[virtualItem.index]!;
-                            return (
-                                <tr
-                                    className={style.tbody_line}
-                                    key={item.id}
-                                    style={{
-                                        transform: `translateY(${virtualItem.offsetTop}px)`,
-                                        height: virtualItem.height,
-                                    }}
-                                >
-                                    {withAction && (
-                                        <td className={style.td_header}>
-                                            <input
-                                                checked={checkList.includes(item.id)}
-                                                onChange={handleChangeCheckboxes(item.id)}
-                                                type='checkbox'
-                                            />
-                                        </td>
-                                    )}
-                                    {order.map((key) => {
-                                        const currentElem = body[ind];
-                                        return (
-                                            <TableCell
-                                                columnId={key}
-                                                editable={editableColumns.includes(key)}
-                                                key={key}
-                                                onChangeCell={onChangeCell}
-                                                rowId={item.id}
-                                            >
-                                                {currentElem[key as keyof typeof currentElem]}
-                                            </TableCell>
-                                        );
-                                    })}
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
-            </div>
+                    </tr>
+                </thead>
+                <tbody className={style.tbody}>
+                    {visibleData.map((item, ind) => {
+                        return (
+                            <tr
+                                className={style.tbody_line}
+                                key={item.id}
+                                style={{ height: rowHeight }}
+                            >
+                                {withAction && (
+                                    <td className={style.td_header}>
+                                        <input
+                                            checked={checkList.includes(item.id)}
+                                            onChange={handleChangeCheckboxes(item.id)}
+                                            type='checkbox'
+                                        />
+                                    </td>
+                                )}
+                                {order.map((key) => {
+                                    const currentElem = body[ind];
+                                    return (
+                                        <TableCell
+                                            columnId={key}
+                                            editable={editableColumns.includes(key)}
+                                            key={key}
+                                            onChangeCell={onChangeCell}
+                                            rowId={item.id}
+                                        >
+                                            {currentElem[key as keyof typeof currentElem]}
+                                        </TableCell>
+                                    );
+                                })}
+                            </tr>
+                        );
+                    })}
+                </tbody>
+            </table>
+            <div style={{ height: getBottomHeight() }} />
         </div>
     );
 };

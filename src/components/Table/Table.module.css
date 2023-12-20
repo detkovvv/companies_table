@@ -1,5 +1,5 @@
 .table_container {
-    height: 600px;
+    /*height: 600px;*/
     overflow-x: hidden;
     overflow-y: auto;
     border: 1px solid lightgray;
@@ -7,10 +7,15 @@
 
 .table {
     border: 2px solid #eee;
+    border-collapse: collapse;
     width: 100%;
     padding: 10px;
     height: 100%;
     margin-bottom: 20px;
+}
+.table td{
+    box-sizing: border-box;
+    padding: 10px;
 }
 
 .thead {
@@ -27,12 +32,12 @@
     border: 1px solid #dddddd;
 }
 
-.tbody {
-    position: relative;
-}
+/*.tbody {*/
+/*    position: relative;*/
+/*}*/
 
 .tbody_line {
-    position: absolute;
+    /*position: absolute;*/
     top: 0;
     align-items: center;
 }

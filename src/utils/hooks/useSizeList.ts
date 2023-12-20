@@ -1,8 +1,12 @@
-import { type RefObject, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
+
+type Key = string | number;
 
 interface UseFixedSizeListProps {
     itemsCount: number;
-    itemHeight: (index: number) => number;
+    // itemHeight: (index: number) => number;
+    getItemKey?: (index: number) => Key;
+    estimateItemHeight?: (index: number) => number;
     // listHeight: number;
     overScan?: number;
     scrollingDelay?: number;
@@ -12,9 +16,21 @@ interface UseFixedSizeListProps {
 const DEFAULT_OVERSCAN = 3;
 const DEFAULT_SCROLLING_DELAY = 150;
 
+function validateProps(props: UseFixedSizeListProps) {
+    const { itemHeight, estimateItemHeight } = props;
+
+    if (!itemHeight && !estimateItemHeight) {
+        throw new Error('You must pass either "itemHeight" or "estimateItemHeight" prop');
+    }
+}
+
 export const useSizeList = (props: UseFixedSizeListProps) => {
+    validateProps(props);
+
     const {
         itemHeight,
+        estimateItemHeight,
+        getItemKey,
         itemsCount,
         scrollingDelay = DEFAULT_SCROLLING_DELAY,
         overScan = DEFAULT_OVERSCAN,
@@ -22,6 +38,7 @@ export const useSizeList = (props: UseFixedSizeListProps) => {
         scrollElementRef,
     } = props;
 
+    const [measurementCash, setMeasurementCash] = useState<Record<Key, number>>();
     const [listHeight, setListHeight] = useState(0);
     const [scrollTop, setScrollTop] = useState(0);
     const [isScrolling, setIsScrolling] = useState(false);
@@ -90,6 +107,18 @@ export const useSizeList = (props: UseFixedSizeListProps) => {
     }, []);
 
     const { virtualItems, startIndex, endIndex, totalHeight, allItems } = useMemo(() => {
+        const getItemHeight = (index: number) => {
+            if (itemHeight) {
+                return itemHeight(index);
+            }
+
+            const key = getItemKey!(index);
+            if (typeof measurementCash![key] === 'number') {
+                return measurementCash![key];
+            }
+
+            return estimateItemHeight!(index);
+        };
         const rangeStart = scrollTop;
         const rangeEnd = scrollTop + listHeight;
         let totalHeight = 0;
@@ -98,9 +127,11 @@ export const useSizeList = (props: UseFixedSizeListProps) => {
         const allRows = Array(itemsCount);
 
         for (let index = 0; index < itemsCount; index++) {
+            const key = getItemKey!(index);
             const row = {
+                key,
                 index: index,
-                height: itemHeight(index),
+                height: getItemHeight(index),
                 offsetTop: totalHeight,
             };
 
@@ -123,8 +154,32 @@ export const useSizeList = (props: UseFixedSizeListProps) => {
             allItems: allRows,
             totalHeight,
         };
-    }, [scrollTop, overScan, listHeight, itemsCount]);
+    }, [
+        scrollTop,
+        overScan,
+        listHeight,
+        itemsCount,
+        itemHeight,
+        estimateItemHeight,
+        measurementCash,
+    ]);
 
+    const measureElement = useCallback((element: Element | null) => {
+        if (!element) {
+            return;
+        }
+        const indexAttribute = element?.getAttribute('data-index') || '';
+        const index = parseInt(indexAttribute, 10);
+        if (Number.isNaN(index)) {
+            console.error('dynamic elements must have a valid "data-index" attribute');
+            return;
+        }
+
+        const size = element?.getBoundingClientRect();
+        const key = getItemKey!(index);
+
+        setMeasurementCash((cash) => ({ ...cash, [key]: size.height }));
+    }, []);
     return {
         virtualItems,
         totalHeight,
@@ -132,5 +187,6 @@ export const useSizeList = (props: UseFixedSizeListProps) => {
         endIndex,
         isScrolling,
         allItems,
+        measureElement,
     };
 };

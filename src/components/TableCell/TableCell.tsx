@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 
 import style from './TabelCell.module.css';
-import { OnChangeCellValue } from '../../utils/types';
+import { type OnChangeCellValue } from '../../utils/types';
 
 type TableCellProps = {
     rowId: string;
@@ -45,6 +45,10 @@ export const TableCell: FC<TableCellProps> = ({
             if (editable) setShowInput(!showInput);
         }
     };
+    const handleBlur = () => {
+        setShowInput(false);
+        setInputState(children);
+    };
 
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => setInputState(e.currentTarget.value);
 
@@ -52,6 +56,7 @@ export const TableCell: FC<TableCellProps> = ({
         <td className={style.td_body} onClick={handleClick}>
             {showInput ? (
                 <input
+                    onBlur={handleBlur}
                     onChange={handleChange}
                     onKeyDown={handleKeyDown}
                     ref={inputRef}
