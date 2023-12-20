@@ -18,7 +18,7 @@ const mockEmployees: EmployeeType[] = Array.from({ length: 333 }, () => [
     },
 ]).flat();
 
-const mockCompany: CompanyType[] = Array.from({ length: 100 }, () => [
+const mockCompany: CompanyType[] = Array.from({ length: 20 }, () => [
     {
         name: 'Аэрофлот',
         address: 'г. Москва, ул. Ленина, д. 111',
