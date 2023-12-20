@@ -2,7 +2,13 @@ import { type FC, useEffect } from 'react';
 
 import style from './CompanyTable.module.css';
 import { fetchCompanies } from '../../store/reducers/ActionCreators';
-import { removeCompany, updateCompany } from '../../store/reducers/CompaniesSlice';
+import {
+    checkedCompaniesSelector,
+    companiesSelector,
+    loadingCompaniesSelector,
+    removeCompany,
+    updateCompany,
+} from '../../store/reducers/CompaniesSlice';
 import { useAppDispatch, useAppSelector } from '../../utils/hooks/reduxHooks';
 import { type OnChangeCellValue } from '../../utils/types';
 import { CompanyForm } from '../Forms/CompanyForm';
@@ -10,9 +16,9 @@ import { Loading } from '../Loading/Loading';
 import { Table } from '../Table/Table';
 
 export const CompanyTable: FC = () => {
-    const selectedCompanyId = useAppSelector((state) => state.companies.checked);
-    const isLoading = useAppSelector((store) => store.companies.isLoading);
-    const data = useAppSelector((store) => store.companies.data);
+    const selectedCompanyId = useAppSelector(checkedCompaniesSelector);
+    const isLoading = useAppSelector(loadingCompaniesSelector);
+    const data = useAppSelector(companiesSelector);
     const order = ['name', 'staff', 'address'];
     const editableColumns = ['name', 'address'];
     const dispatch = useAppDispatch();

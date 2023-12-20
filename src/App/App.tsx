@@ -13,7 +13,6 @@ export const App = () => {
             onReset={() => {
                 location.reload();
             }}
-            resetKeys={['someKey']}
         >
             <Provider store={store}>
                 <CommonTable />

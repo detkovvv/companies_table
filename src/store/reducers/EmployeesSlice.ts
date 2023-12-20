@@ -1,6 +1,7 @@
 import { createSlice, type PayloadAction } from '@reduxjs/toolkit';
 
 import { type EmployeeFullType, type OnChangeCellValue } from '../../utils/types';
+import { type RootState } from '../store';
 
 export type EmployeeStoreType = {
     data: EmployeeFullType[];
@@ -56,3 +57,8 @@ export const {
     removeEmployee,
     updateEmployee,
 } = employeesSlice.actions;
+
+export const employeesSelector = (state: RootState) => state.employees.data;
+export const checkedEmployeesSelector = (state: RootState) => state.employees.checked;
+export const loadingEmployeesSelector = (state: RootState) => state.employees.isLoading;
+export const errorEmployeesSelector = (state: RootState) => state.employees.error;

@@ -8,7 +8,7 @@ import React, {
 } from 'react';
 
 import style from './TabelCell.module.css';
-import { OnChangeCellValue } from '../../utils/types';
+import { type OnChangeCellValue } from '../../utils/types';
 
 type TableCellProps = {
     rowId: string;

@@ -2,24 +2,28 @@ import { type FC, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
 import style from './EmployeesTable.module.css';
+import { checkedCompaniesSelector, companiesSelector } from '../../store/reducers/CompaniesSlice';
 import {
+    checkedEmployeesSelector,
     employeesFetching,
+    employeesSelector,
+    loadingEmployeesSelector,
     removeEmployee,
     updateEmployee,
 } from '../../store/reducers/EmployeesSlice';
 import { useAppSelector } from '../../utils/hooks/reduxHooks';
-import { type OnChangeCellValue } from '../../utils/types';
+import { type CompanyFullType, type OnChangeCellValue } from '../../utils/types';
 import { EmployeeForm } from '../Forms/EmployeeForm';
 import { Loading } from '../Loading/Loading';
 import { Table } from '../Table/Table';
 
 export const EmployeesTable: FC = () => {
-    const companiesData = useAppSelector((store) => store.companies.data);
-    const selectedCompanyId = useAppSelector((state) => state.companies.checked);
+    const companiesData: CompanyFullType[] = useAppSelector(companiesSelector);
+    const selectedCompanyId = useAppSelector(checkedCompaniesSelector);
 
-    const employeesData = useAppSelector((state) => state.employees.data);
-    const isLoading = useAppSelector((state) => state.employees.isLoading);
-    const selectedEmployeesId = useAppSelector((state) => state.employees.checked);
+    const employeesData = useAppSelector(employeesSelector);
+    const isLoading = useAppSelector(loadingEmployeesSelector);
+    const selectedEmployeesId = useAppSelector(checkedEmployeesSelector);
 
     const dispatch = useDispatch();
 

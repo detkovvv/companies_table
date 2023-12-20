@@ -6,6 +6,7 @@ import {
     type EmployeeFullType,
     type OnChangeCellValue,
 } from '../../utils/types';
+import { type RootState } from '../store';
 
 export type CompaniesStoreType = {
     data: CompanyFullType[];
@@ -107,3 +108,8 @@ export const {
     companiesFetchingSuccess,
     companiesFetchingError,
 } = companiesSlice.actions;
+
+export const companiesSelector = (state: RootState) => state.companies.data;
+export const checkedCompaniesSelector = (state: RootState) => state.companies.checked;
+export const loadingCompaniesSelector = (state: RootState) => state.companies.isLoading;
+export const errorCompaniesSelector = (state: RootState) => state.companies.error;

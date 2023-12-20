@@ -14,20 +14,12 @@ import { TableCell } from '../TableCell/TableCell';
 
 type TableProps = (
     | {
-          head: {
-              name: string;
-              staff: string;
-              address: string;
-          };
+          head: Record<string, string>;
           body: CompanyFullType[];
           tableName: 'companies';
       }
     | {
-          head: {
-              name: string;
-              surname: string;
-              position: string;
-          };
+          head: Record<string, string>;
           body: EmployeeFullType[];
           tableName: 'employees';
       }
