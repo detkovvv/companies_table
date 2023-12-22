@@ -94,7 +94,7 @@ export const Table: FC<TableProps> = ({
                                     }}
                                 >
                                     {withAction && (
-                                        <td className={style.td_header}>
+                                        <td className={style.td_body_checkbox}>
                                             <input
                                                 checked={checkList.includes(item.id)}
                                                 onChange={handleChangeCheckboxes(item.id)}

@@ -1,6 +1,7 @@
 .td_body {
-    width: 200px;
+    width: 250px;
     padding: 5px 10px;
     border: 1px solid #dddddd;
+    font-size: 14px;
     text-align: left;
 }

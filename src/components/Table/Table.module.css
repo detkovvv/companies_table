@@ -18,10 +18,11 @@
 
 .th_checkbox {
     width: 20px;
+    border: 1px solid #dddddd;
 }
 
 .th_header {
-    width: 200px;
+    width: 250px;
     padding: 5px;
     border: 1px solid #dddddd;
 }
@@ -35,8 +36,7 @@
     top: 0;
     align-items: center;
 }
-
-.td_header {
+.td_body_checkbox {
     width: 20px;
     border: 1px solid #dddddd;
 }
