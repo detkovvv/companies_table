@@ -11,6 +11,7 @@ import {
     type OnChangeCellValue,
 } from '../../utils/types';
 import { TableCell } from '../TableCell/TableCell';
+import { TableHead } from '../TableHead/TableHead';
 
 type TableProps = (
     | {
@@ -62,24 +63,12 @@ export const Table: FC<TableProps> = ({
         <div className={style.table_container} ref={scrollElementRef}>
             <div style={{ height: totalHeight }}>
                 <table className={style.table}>
-                    <thead className={style.thead}>
-                        <tr>
-                            {withAction && (
-                                <th className={style.th_checkbox}>
-                                    <input
-                                        onChange={handleChangeMainCheckbox}
-                                        ref={mainCheckboxRef}
-                                        type='checkbox'
-                                    />
-                                </th>
-                            )}
-                            {sortedHead.map((i) => (
-                                <th className={style.th_header} key={i.key}>
-                                    {i.title}
-                                </th>
-                            ))}
-                        </tr>
-                    </thead>
+                    <TableHead
+                        handleChangeMainCheckbox={handleChangeMainCheckbox}
+                        mainCheckboxRef={mainCheckboxRef}
+                        sortedHead={sortedHead}
+                        withAction={withAction}
+                    />
                     <tbody className={style.tbody}>
                         {virtualItems.map((virtualItem) => {
                             const item = body[virtualItem.index]!;

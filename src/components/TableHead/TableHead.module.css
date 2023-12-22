@@ -1,0 +1,13 @@
+.thead {
+    background: #efefef;
+}
+.th_checkbox {
+    width: 20px;
+    border: 1px solid #dddddd;
+}
+
+.th_header {
+    width: 250px;
+    padding: 5px;
+    border: 1px solid #dddddd;
+}
