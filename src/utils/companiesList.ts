@@ -1,37 +1,25 @@
+import { faker as faker } from '@faker-js/faker/locale/ru';
+
 import { type CompanyType, type EmployeeType } from './types';
+
+const randomCompanyName = () => faker.company.name();
+const randomCompanyAddress = () => faker.location.streetAddress(true);
+const randomEmployeeSurname = () => faker.person.lastName();
+const randomEmployeeName = () => faker.person.firstName();
+const randomEmployeePosition = () => faker.person.jobTitle();
 
 const mockEmployeesData: EmployeeType[] = Array.from({ length: 333 }, () => [
     {
-        surname: 'Сидоров',
-        name: 'Александр',
-        position: 'Генеральный директор',
-    },
-    {
-        surname: 'Петров',
-        name: 'Александр',
-        position: 'Главный бухгалтер',
-    },
-    {
-        surname: 'Иванова',
-        name: 'Екатерина',
-        position: 'Финансовый директор',
+        surname: randomEmployeeSurname(),
+        name: randomEmployeeName(),
+        position: randomEmployeePosition(),
     },
 ]).flat();
 
 const mockCompaniesData: CompanyType[] = Array.from({ length: 20 }, () => [
     {
-        name: 'Аэрофлот',
-        address: 'г. Москва, ул. Ленина, д. 111',
-        employees: mockEmployeesData,
-    },
-    {
-        name: 'Северсталь',
-        address: 'г. Москва, ул. Ленина, д. 111',
-        employees: mockEmployeesData,
-    },
-    {
-        name: 'Газпром',
-        address: 'г. Москва, ул. Ленина, д. 111',
+        name: randomCompanyName(),
+        address: randomCompanyAddress(),
         employees: mockEmployeesData,
     },
 ]).flat();
