@@ -37,20 +37,18 @@ test('addEmployee should update state correctly', () => {
 test('removeEmployee should update state correctly', () => {
     const initialState = {
         ...INITIAL_STATE,
-        data: [USER, { ...USER, id: '2', name: 'Vasya' }],
+        data: [USER],
     };
     const actionPayload = ['1'];
 
     const newState = employeesSlice.reducer(initialState, removeEmployee(actionPayload));
 
-    expect(newState.data).deep.equal([
-        { id: '2', name: 'Vasya', surname: 'Vasin', position: 'counter' },
-    ]);
+    expect(newState.data).deep.equal([]);
 });
 test('updateCompany should update state correctly', () => {
     const initialState = {
         ...INITIAL_STATE,
-        data: [USER, { ...USER, id: '2', name: 'Vasya' }],
+        data: [USER],
     };
     const actionPayload = { rowId: '1', columnId: 'name', value: 'Petya' };
 

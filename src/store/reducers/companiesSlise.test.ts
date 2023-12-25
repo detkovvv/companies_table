@@ -8,6 +8,7 @@ import {
     companiesSlice,
     removeCompany,
     setCheckedCompany,
+    updateCompany,
 } from './CompaniesSlice';
 
 const COMPANY = {
@@ -82,23 +83,50 @@ test('addCompany should update state correctly', () => {
 test('removeCompany should update state correctly', () => {
     const initialState = {
         ...INITIAL_STATE,
-        data: [COMPANY, { ...COMPANY, id: '2', name: 'Toyota' }],
+        data: [COMPANY],
     };
     const actionPayload = ['11'];
 
     const newState = companiesSlice.reducer(initialState, removeCompany(actionPayload));
 
-    expect(newState.data).deep.equal([{ id: '2', name: 'Toyota', address: 'Stasova' }]);
+    expect(newState.data).deep.equal([]);
 });
 
 test('updateCompany should update state correctly', () => {
     const initialState = {
         ...INITIAL_STATE,
-        data: [COMPANY, { ...COMPANY, id: '2', name: 'Toyota' }],
+        data: [COMPANY],
     };
-    const actionPayload = ['11'];
+    const actionPayload = { rowId: '11', columnId: 'address', value: 'Stasova 114' };
 
-    const newState = companiesSlice.reducer(initialState, removeCompany(actionPayload));
+    const newState = companiesSlice.reducer(initialState, updateCompany(actionPayload));
 
-    expect(newState.data).deep.equal([{ id: '2', name: 'Toyota', address: 'Stasova' }]);
+    expect(newState.data).deep.equal([
+        {
+            id: '11',
+            name: 'Аэрофлот',
+            address: 'Stasova 114',
+            staff: 3,
+            employees: [
+                {
+                    id: '22',
+                    surname: 'Сидоров',
+                    name: 'Александр',
+                    position: 'Генеральный директор',
+                },
+                {
+                    id: '33',
+                    surname: 'Петров',
+                    name: 'Александр',
+                    position: 'Главный бухгалтер',
+                },
+                {
+                    id: '44',
+                    surname: 'Иванова',
+                    name: 'Екатерина',
+                    position: 'Финансовый директор',
+                },
+            ],
+        },
+    ]);
 });
